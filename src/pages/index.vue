@@ -1,5 +1,6 @@
 <template lang="pug">
-  section
+  .loading_wrap(v-if="loading") Loading...
+  section(v-else)
     header
       h1.logo Mu-Da
     .signin_wrap
@@ -15,7 +16,8 @@ import firebase, { googleProvider, facebookProvider } from '~/plugins/firebase'
 export default {
   data () {
     return {
-      error: ''
+      error: '',
+      loading: true
     }
   },
   computed: {
@@ -25,11 +27,12 @@ export default {
   },
   beforeCreate () {
     // ここでローディングのインジケータアニメーションを表示すると良い
-    firebase.auth().onAuthStateChanged(async (user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        await this.login(user.uid)
+        this.login(user.uid)
         this.$router.push('/mypage')
       }
+      this.loading = false
     })
   },
   methods: {
@@ -53,7 +56,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style>

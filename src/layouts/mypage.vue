@@ -1,12 +1,14 @@
 <template lang="pug">
-  .contents
-    header
-      p.logo Mu-Da
-      nav
-        nuxt-link(to="/") Home
-        button(type="button" @click='doLogout') Logout
-    div
-      nuxt
+  div
+    .loading_wrap(v-if="loading") Loading...
+    .contents(v-else)
+      header
+        p.logo Mu-Da
+        nav
+          nuxt-link(to="/") Home
+          button(type="button" @click='doLogout') Logout
+      div
+        nuxt
 </template>
 
 <script>
@@ -14,14 +16,20 @@ import { mapActions } from 'vuex'
 import firebase from '~/plugins/firebase'
 
 export default {
+  data () {
+    return {
+      loading: true
+    }
+  },
   beforeCreate () {
     // ここでローディングのインジケータアニメーションを表示すると良い
-    firebase.auth().onAuthStateChanged(async (user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        await this.login(user)
+        this.login(user)
       } else {
         this.$router.push('/')
       }
+      this.loading = false
     })
   },
   methods: {
