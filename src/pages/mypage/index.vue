@@ -9,7 +9,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import firebase from '@/plugins/firebase'
+
 export default {
   layout: 'mypage',
   data () {
@@ -22,21 +22,6 @@ export default {
       'uid',
       'user'
     ])
-  },
-  mounted () {
-    this.$nextTick(() => {
-      this.readAllUserFromDB()
-    })
-  },
-  methods: {
-    readAllUserFromDB () {
-      const userRef = firebase.database().ref('/users')
-      userRef.once('value', (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          this.allusers.push(childSnapshot.val())
-        })
-      })
-    }
   }
 }
 </script>

@@ -1,6 +1,8 @@
-
-export default {
+/* eslint-disable nuxt/no-cjs-in-config */
+module.exports = {
   mode: 'universal',
+  srcDir: 'src',
+  buildDir: 'functions/.nuxt',
   /*
   ** Headers of the page
   */
@@ -59,6 +61,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
+    extractCSS: true,
     extend (config, ctx) {
     }
   }

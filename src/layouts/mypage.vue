@@ -11,11 +11,23 @@
 
 <script>
 import { mapActions } from 'vuex'
+import firebase from '~/plugins/firebase'
+
 export default {
-  middleware: 'authenticated',
+  beforeCreate () {
+    // ここでローディングのインジケータアニメーションを表示すると良い
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        await this.login(user)
+      } else {
+        this.$router.push('/')
+      }
+    })
+  },
   methods: {
     ...mapActions('modules/user', [
-      'logout'
+      'logout',
+      'login'
     ]),
     async doLogout () {
       await this.logout()

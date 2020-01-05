@@ -10,7 +10,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import firebase, { googleProvider, facebookProvider } from '@/plugins/firebase'
+import firebase, { googleProvider, facebookProvider } from '~/plugins/firebase'
 
 export default {
   data () {
@@ -18,33 +18,38 @@ export default {
       error: ''
     }
   },
-  middleware: ['handleLogin'],
   computed: {
     ...mapGetters('modules/user', [
       'uid'
     ])
   },
+  beforeCreate () {
+    // ここでローディングのインジケータアニメーションを表示すると良い
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        await this.login(user.uid)
+        this.$router.push('/mypage')
+      }
+    })
+  },
   methods: {
     ...mapActions('modules/user', [
       'login'
     ]),
-    async fbGoogleLogin () {
+    async singIn (provider) {
       try {
-        const { user } = await firebase.auth().signInWithPopup(googleProvider)
+        const { user } = await firebase.auth().signInWithPopup(provider)
         await this.login(user)
       } catch (err) {
         this.error = err.message
       }
       this.$router.push('/mypage')
     },
-    async fbFacebookLogin () {
-      try {
-        const { user } = await firebase.auth().signInWithPopup(facebookProvider)
-        await this.login(user)
-      } catch (err) {
-        this.error = err.message
-      }
-      this.$router.push('/mypage')
+    fbGoogleLogin () {
+      this.singIn(googleProvider)
+    },
+    fbFacebookLogin () {
+      this.singIn(facebookProvider)
     }
   }
 }

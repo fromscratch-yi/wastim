@@ -69,7 +69,7 @@ export const mutations = {
   },
 
   setUSER (state, user) {
-    console.log('[STORE MUTATIONS] - setUSER:', user)
+    console.log('[STORE MUTATIONS] - setUSER:')
     state.user = user
   }
 }
