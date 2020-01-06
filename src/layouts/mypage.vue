@@ -5,7 +5,7 @@
       header
         p.logo Mu-Da
         nav
-          nuxt-link(to="/") Home
+          nuxt-link(:to="localePath('index')") Home
           button(type="button" @click='doLogout') Logout
       div
         nuxt
@@ -39,7 +39,7 @@ export default {
           this.login(user)
           this.loading = false
         } else {
-          this.$router.push('/')
+          this.$router.push(this.localePath('index'))
         }
       })
     }
@@ -51,7 +51,7 @@ export default {
     ]),
     async doLogout () {
       await this.logout()
-      this.$router.push('/')
+      this.$router.push(this.localePath('index'))
     }
   }
 }

@@ -1,0 +1,8 @@
+{
+  "error": {
+    "auth/account-exists-with-different-credential": "already use google",
+    "auth/network-request-failed": "no network",
+    "auth/operation-not-supported-in-this-environment": ""
+  },
+  "explain": "Mu-Da can record your waste-time."
+}

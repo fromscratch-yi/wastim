@@ -1,0 +1,8 @@
+{
+  "error": {
+    "auth/account-exists-with-different-credential": "このメールアドレスはすでにGoogleアカウントに紐づいています。そのためGoogleアカウントにてサインインしてください。",
+    "auth/network-request-failed": "インターネットに接続されていません。",
+    "auth/operation-not-supported-in-this-environment": ""
+  },
+  "explain": "Mu-Da(ムーダ)は1日の無駄時間を管理するアプリです。<br>感覚的に無駄に感じた合計時間を1日に1回登録していただくだけのアプリです。<br>この1日1回の行動により、自身の時間の使い方の振り返りや、気づきによる意識改革につながることがあるかもしれません。<br>是非使ってみてください！"
+}

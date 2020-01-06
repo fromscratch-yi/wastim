@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 import firebase from '~/plugins/firebase'
 
 export const state = () => ({
@@ -26,7 +25,6 @@ export const getters = {
 
 export const actions = {
   async login ({ dispatch, status }, user) {
-    const token = await firebase.auth().currentUser.getIdToken(true)
     const userInfo = {
       name: user.displayName,
       email: user.email,
@@ -34,14 +32,12 @@ export const actions = {
       uid: user.uid
     }
 
-    Cookies.set('access_token', token)
     await dispatch('setUSER', userInfo)
     await dispatch('saveUID', userInfo.uid)
   },
 
   async logout ({ commit }) {
     await firebase.auth().signOut()
-    Cookies.remove('access_token')
     commit('setUSER', null)
     commit('saveUID', null)
   },

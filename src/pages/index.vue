@@ -3,17 +3,22 @@
   section.page(v-else)
     .inner
       header
+        div.locale_wrap
+          p: nuxt-link(:to="switchLocalePath('en')") EN
+          p: nuxt-link(:to="switchLocalePath('ja')") JA
+      .mv
         h1.logo Mu-Da
+        p.explain(v-html="this.$t('explain')")
       ul.signin_wrap
         li
           button.signin_btn(@click.prevent="fbGoogleLogin")
-            span.img_wrap: img(loading="lazy" src="~assets/images/google.svg" alt="Google" width="18" height="18")
+            span.img_wrap: img(loading="lazy" src="~assets/images/google.svg" alt="Google" width="20" height="20")
             span.signin_txt Sign in with Google
         li
           button.signin_btn.facebook(@click.prevent="fbFacebookLogin")
-            span.img_wrap: img(loading="lazy" src="~assets/images/facebook.svg" alt="Facebook" width="18" height="18")
+            span.img_wrap: img(loading="lazy" src="~assets/images/facebook.svg" alt="Facebook" width="20" height="20")
             span.signin_txt Sign in with Facebook
-        p(v-if="error") {{ error }}
+      .error_wrap: p.txt(v-if="error" v-html="error")
 </template>
 
 <script>
@@ -27,7 +32,7 @@ export default {
   },
   data () {
     return {
-      error: '',
+      error: null,
       loading: true
     }
   },
@@ -37,14 +42,21 @@ export default {
       'isAuthenticated'
     ])
   },
-  beforeCreate () {
+  async beforeCreate () {
     if (!this.isAuthenticated) {
       this.loading = true
-      // ここでローディングのインジケータアニメーションを表示すると良い
-      firebase.auth().onAuthStateChanged((user) => {
+      await firebase.auth().getRedirectResult().then(async (result) => {
+        if (result.user) {
+          await this.login(result.user)
+          this.$router.push(this.localePath('mypage'))
+        }
+      }).catch((error) => {
+        this.error = this.$t('error.' + error.code)
+      })
+      await firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
-          this.login(user)
-          this.$router.push('/mypage')
+          await this.login(user)
+          this.$router.push(this.localePath('mypage'))
         } else {
           this.loading = false
         }
@@ -58,11 +70,9 @@ export default {
     async singIn (provider) {
       this.loading = true
       try {
-        const { user } = await firebase.auth().signInWithRedirect(provider)
-        await this.login(user)
-        this.$router.push('/mypage')
-      } catch (err) {
-        this.error = err.message
+        await firebase.auth().signInWithRedirect(provider)
+      } catch (error) {
+        this.error = this.$t('error.' + error.code)
         this.loading = false
       }
     },
@@ -91,23 +101,23 @@ export default {
     -webkit-overflow-scrolling: touch;
   }
 }
-header {
+.mv {
   padding: 10px 15px;
 }
 .signin_wrap {
   .signin_btn {
     display: table;
-    direction: ltr;
+        direction: ltr;
     font-weight: 500;
     height: auto;
     line-height: normal;
-    max-width: 220px;
+    max-width: 260px;
     min-height: 40px;
-    padding: 8px 16px;
+    padding: 15px 30px;
     text-align: left;
     width: 100%;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-    border-radius: 20px;
+    border-radius: 40px;
     margin: 15px auto 0;
     background: #fff;
     .img_wrap {
@@ -116,13 +126,12 @@ header {
       img {
         display: inline-block;
         vertical-align: middle;
-        height: 18px;
-        width: 18px;
+        height: 20px;
+        width: 20px;
       }
     }
     .signin_txt {
       display: table-cell;
-      font-size: 14px;
       padding-left: 16px;
       text-transform: none;
       vertical-align: middle;
@@ -134,6 +143,18 @@ header {
     .signin_txt {
       color: #fff;
     }
+  }
+}
+.error_wrap {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 0 15px;
+  text-align: center;
+  .txt {
+    display: inline-block;
+    color: #e80000;
+    font-size: 0.82rem;
+    line-height: 1.2;
   }
 }
 </style>
