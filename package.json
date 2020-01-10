@@ -1,5 +1,5 @@
 {
-  "name": "mu-da",
+  "name": "wastim",
   "version": "1.0.0",
   "description": "This app can record your waste-time",
   "author": "Yuichi Ishiyama",
@@ -25,6 +25,7 @@
     "@nuxtjs/axios": "^5.9.2",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-beta.19",
+    "@nuxtjs/svg": "^0.1.6",
     "cross-env": "^6.0.3",
     "express": "^4.17.1",
     "firebase": "^7.6.1",
@@ -37,11 +38,11 @@
     "sass-loader": "^8.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.1.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
-    "eslint-plugin-nuxt": ">=0.5.0"
+    "eslint-plugin-nuxt": ">=0.5.0",
+    "nodemon": "^1.18.9"
   }
 }

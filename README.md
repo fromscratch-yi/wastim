@@ -1,4 +1,4 @@
-# mu-da
+# Wastim
 
 > My praiseworthy Nuxt.js project
 

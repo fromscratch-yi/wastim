@@ -7,7 +7,7 @@
           p: nuxt-link(:to="switchLocalePath('en')") EN
           p: nuxt-link(:to="switchLocalePath('ja')") JA
       .mv
-        h1.logo Mu-Da
+        h1.logo Wastim
         p.explain(v-html="this.$t('explain')")
       ul.signin_wrap
         li
@@ -19,16 +19,20 @@
             span.img_wrap: img(loading="lazy" src="~assets/images/facebook.svg" alt="Facebook" width="20" height="20")
             span.signin_txt Sign in with Facebook
       .error_wrap: p.txt(v-if="error" v-html="error")
+    .area
+      BgAnimation
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Loading from '@/components/Loading.vue'
+import BgAnimation from '@/components/BgAnimation'
 import firebase, { googleProvider, facebookProvider } from '@/plugins/firebase'
 
 export default {
   components: {
-    Loading
+    Loading,
+    BgAnimation
   },
   data () {
     return {
@@ -82,10 +86,22 @@ export default {
     fbFacebookLogin () {
       this.singIn(facebookProvider)
     }
+  },
+  head: {
+    bodyAttrs: {
+      class: 'top'
+    }
   }
 }
 </script>
-
+<style lang="scss">
+body.top {
+  background: -moz-linear-gradient(top, #f6d365, #fda085);
+  background: -webkit-linear-gradient(top, #f6d365, #fda085);
+  background: linear-gradient(to bottom, #f6d365, #fda085);
+  background-color: #f6d365;
+}
+</style>
 <style lang="scss" scoped>
 .page {
   position: fixed;
@@ -94,7 +110,8 @@ export default {
   bottom: 0;
   left: 0;
   height: 100%;
-  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background: -webkit-linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   .inner {
     height: 100%;
     overflow: auto;

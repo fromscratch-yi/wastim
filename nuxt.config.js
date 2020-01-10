@@ -20,7 +20,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#fda085' },
   /*
   ** Global CSS
   */
@@ -49,6 +49,7 @@ module.exports = {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    '@nuxtjs/svg',
     [
       'nuxt-i18n',
       {
@@ -59,12 +60,13 @@ module.exports = {
         ],
         defaultLocale: 'ja',
         vueI18n: {
-          fallbackLocale: 'en'
+          fallbackLocale: 'ja'
         },
         vueI18nLoader: true,
         lazy: true,
         langDir: 'locales/',
-        detectBrowserLanguage: false
+        detectBrowserLanguage: false,
+        seo: true
       }
     ]
   ],

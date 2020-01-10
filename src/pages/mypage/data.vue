@@ -1,9 +1,9 @@
 <template lang="pug">
   section.container
     div(v-if="user")
+      img(v-if="user.icon" :src="user.icon" :alt="user.name + ' icon'")
       p User ID: {{ uid }}
-      p Current User: {{ user.name }}
-      img(v-if="user.icon" :src="user.icon" alt="")
+      p Name: {{ user.name }}
 </template>
 
 <script>
@@ -21,6 +21,16 @@ export default {
       'uid',
       'user'
     ])
+  },
+  head: {
+    bodyAttrs: {
+      class: 'my_account'
+    }
   }
 }
 </script>
+<style lang="scss" scoped>
+  body {
+    background-color: #fff;
+  }
+</style>

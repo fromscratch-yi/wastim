@@ -1,24 +1,23 @@
 <template lang="pug">
-  div
-    Loading(v-if="loading")
-    .contents(v-else)
-      header
-        p.logo Mu-Da
-        nav
-          nuxt-link(:to="localePath('index')") Home
-          button(type="button" @click='doLogout') Logout
-      div
-        nuxt
+  Loading(v-if="loading")
+  .contents(v-else)
+    my-header
+    nuxt
+    my-nav
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Loading from '@/components/Loading.vue'
-import firebase from '~/plugins/firebase'
+import Loading from '@/components/Loading'
+import MyHeader from '@/components/MyHeader'
+import MyNav from '@/components/MyNav'
+import firebase from '@/plugins/firebase'
 
 export default {
   components: {
-    Loading
+    Loading,
+    MyHeader,
+    MyNav
   },
   data () {
     return {
@@ -46,13 +45,16 @@ export default {
   },
   methods: {
     ...mapActions('modules/user', [
-      'logout',
       'login'
-    ]),
-    async doLogout () {
-      await this.logout()
-      this.$router.push(this.localePath('index'))
-    }
+    ])
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .contents {
+    background: #ffffff;
+    flex: 1;
+    padding-bottom: 85px;
+  }
+</style>
