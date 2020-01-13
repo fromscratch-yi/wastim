@@ -7,6 +7,7 @@
         p.name {{ user.name }}
         p.uid 【ID : {{ uid }}】
       BgAnimation
+    p.setting_txt {{ this.$t('account.setting') }}
     div.locale_wrap
       p: nuxt-link(:to="switchLocalePath('en')") EN
       p: nuxt-link(:to="switchLocalePath('ja')") JA
@@ -53,14 +54,14 @@ export default {
   .container {
     .my_nav_wrap {
       position: relative;
-      padding: 40px 0 50px;
+      padding: 50px 0 60px;
       text-align: center;
       background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
       .mv_inner {
         position: relative;
         z-index: 4;
         h1 {
-          margin-bottom: 40px;
+          margin-bottom: 35px;
           font-size: 18px;
           color: #333;
         }
@@ -81,6 +82,54 @@ export default {
         z-index: 1;
       }
     }
+    .setting_txt {
+      margin: 30px auto 10px;
+      text-align: center;
+    }
+    .locale_wrap {
+      display: flex;
+      margin: 0 auto 40px;
+      max-width: 260px;
+      width: 60%;
+      p {
+        width: 100%;
+        text-align: center;
+        a {
+          display: block;
+          padding: 15px 5px;
+          background: #fff;
+          border: 2px solid #fda085;
+          text-decoration: none;
+          font-weight: bold;
+          color: #fff;
+        }
+        a:link, a:visited {
+          color: #fda085;
+        }
+        a.nuxt-link-exact-active {
+          background: #fda085;
+          color: #fff;
+        }
+      }
+      P:first-child a {
+        border-top-left-radius : 60px;
+        -webkit-border-top-left-radius: 60px;
+        -moz-border-radius-topleft: 60px;
+        border-bottom-left-radius : 60px;
+        -webkit-border-bottom-left-radius: 60px;
+        -moz-border-radius-bottomleft: 60px;
+        border-right: none;
+      }
+      p:last-child a {
+        border-top-right-radius : 60px;
+        -webkit-border-top-right-radius: 60px;
+        -moz-border-radius-topright: 60px;
+        border-bottom-right-radius : 60px;
+        -webkit-border-bottom-right-radius: 60px;
+        -moz-border-radius-bottomright: 60px;
+        border-left: none;
+      }
+    }
     .logout {
       display: block;
       width: 60%;
@@ -91,6 +140,7 @@ export default {
       border-radius: 60px;
       background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
       text-shadow: 3px 2px 10px #f18348;
+      color: #fff;
     }
   }
 </style>

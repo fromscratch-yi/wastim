@@ -1,9 +1,7 @@
 <template lang="pug">
   section.container
     div(v-if="user")
-      img(v-if="user.icon" :src="user.icon" :alt="user.name + ' icon'")
-      p User ID: {{ uid }}
-      p Name: {{ user.name }}
+      h1 Setting
 </template>
 
 <script>

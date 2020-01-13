@@ -3,11 +3,12 @@
   section.page(v-else)
     .inner
       header
+        p.logo: img(src="~assets/images/logo.png" alt="Wastim")
         div.locale_wrap
           p: nuxt-link(:to="switchLocalePath('en')") EN
           p: nuxt-link(:to="switchLocalePath('ja')") JA
       .mv
-        h1.logo Wastim
+        h1.logo: img(src="~assets/images/logo-wh.png" alt="Wastim")
         p.explain(v-html="this.$t('explain')")
       ul.signin_wrap
         li
@@ -116,10 +117,71 @@ body.top {
     height: 100%;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    header {
+      display: flex;
+      align-items: center;
+      padding: 15px 0;
+      background: #fff;
+      .logo {
+        max-width: 40%;
+        width: 120px;
+        margin-left: 15px;
+      }
+      .locale_wrap {
+        display: flex;
+        margin: 0 auto;
+        margin: 0 15px 0 auto;
+        width: 110px;
+        p {
+          width: 100%;
+          text-align: center;
+          a {
+            display: block;
+            padding: 8px 5px;
+            background: #fff;
+            border: 2px solid #fda085;
+            text-decoration: none;
+            font-weight: bold;
+            color: #fff;
+            font-size: 13px;
+          }
+          a:link, a:visited {
+            color: #fda085;
+          }
+          a.nuxt-link-exact-active {
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            color: #fff;
+          }
+        }
+        P:first-child a {
+          border-top-left-radius : 60px;
+          -webkit-border-top-left-radius: 60px;
+          -moz-border-radius-topleft: 60px;
+          border-bottom-left-radius : 60px;
+          -webkit-border-bottom-left-radius: 60px;
+          -moz-border-radius-bottomleft: 60px;
+          border-right: none;
+        }
+        p:last-child a {
+          border-top-right-radius : 60px;
+          -webkit-border-top-right-radius: 60px;
+          -moz-border-radius-topright: 60px;
+          border-bottom-right-radius : 60px;
+          -webkit-border-bottom-right-radius: 60px;
+          -moz-border-radius-bottomright: 60px;
+          border-left: none;
+        }
+      }
+    }
   }
 }
 .mv {
   padding: 10px 15px;
+  h1.logo {
+    width: 80%;
+    max-width: 250px;
+    margin: 30px auto;
+  }
 }
 .signin_wrap {
   .signin_btn {

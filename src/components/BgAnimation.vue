@@ -1,6 +1,6 @@
 <template lang="pug">
   ul.circles
-        li(v-for="n of 8" :key="n")
+    li(v-for="n of 8" :key="n")
 </template>
 <style lang="scss" scoped>
   .circles{

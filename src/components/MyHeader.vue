@@ -1,6 +1,6 @@
 <template lang="pug">
   header.my_header
-    p.logo Westim
+    p.logo: img(src="~assets/images/logo.png" alt="Wastim")
 </template>
 
 <script>
@@ -14,6 +14,9 @@
       text-align: center;
       font-size: 20px;
       font-weight: bold;
+      img {
+        width: 150px;
+      }
     }
   }
 </style>

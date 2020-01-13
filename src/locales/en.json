@@ -2,6 +2,7 @@
   "explain": "wastim can record your waste-time.",
   "account": {
     "title": "User Profile",
+    "setting": "Language Setting",
     "logout": "Logout"
   },
   "error": {

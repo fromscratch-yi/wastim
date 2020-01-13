@@ -1,7 +1,6 @@
 <template lang="pug">
   Loading(v-if="loading")
-  .contents(v-else)
-    my-header
+  .contents(v-else-if="user")
     nuxt
     my-nav
 </template>
@@ -9,14 +8,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Loading from '@/components/Loading'
-import MyHeader from '@/components/MyHeader'
 import MyNav from '@/components/MyNav'
 import firebase from '@/plugins/firebase'
 
 export default {
   components: {
     Loading,
-    MyHeader,
     MyNav
   },
   data () {
@@ -26,7 +23,8 @@ export default {
   },
   computed: {
     ...mapGetters('modules/user', [
-      'isAuthenticated'
+      'isAuthenticated',
+      'user'
     ])
   },
   beforeCreate () {
@@ -55,6 +53,6 @@ export default {
   .contents {
     background: #ffffff;
     flex: 1;
-    padding-bottom: 85px;
+    padding-bottom: 80px;
   }
 </style>

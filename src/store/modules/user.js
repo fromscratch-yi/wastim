@@ -28,7 +28,7 @@ export const actions = {
     const userInfo = {
       name: user.displayName,
       email: user.email,
-      icon: user.photoURL,
+      icon: user.photoURL + '?type=large',
       uid: user.uid
     }
 

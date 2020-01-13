@@ -16,6 +16,7 @@
             li テスト
             li テスト
             li テスト
+        div.add_bg
       li: nuxt-link(:to="localePath('mypage-account')")
         AccountSvg
         //- span Account
@@ -124,26 +125,54 @@ export default {
           }
         }
         #add_check:checked+label+.add_form {
-          bottom: 0%;
+          bottom: -45%;
         }
         .add_form {
           position: fixed;
           box-sizing: border-box;
-          box-shadow: 0 -2px 10px #c7c7c7;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
           width: 100%;
           height: 100%;
           background: #fff;
-          color: #fff;
+          color: #333;
           padding: 20px;
           bottom: -110%;
           left: 0;
           right: 0;
           transition: bottom 1s;
+          z-index: 3;
+        }
+        #add_check:checked+label+.add_form+.add_bg {
+          display: block;
+        }
+        .add_bg {
+          display: none;
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;
+          background: rgba(51, 51, 51, 0.3);
+          animation: fadeIn 1s ease 0s 1 normal;
+          -webkit-animation: fadeIn 1s ease 0s 1 normal;
         }
       }
       li:last-child {
         border-right: none;
       }
     }
+  }
+
+  @keyframes fadeIn {
+      0% {opacity: 0}
+      100% {opacity: 1}
+  }
+
+  @-webkit-keyframes fadeIn {
+      0% {opacity: 0}
+      100% {opacity: 1}
   }
 </style>
