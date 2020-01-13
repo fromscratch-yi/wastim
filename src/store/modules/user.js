@@ -1,4 +1,5 @@
-import firebase from '~/plugins/firebase'
+import firebase from 'firebase'
+import { db } from '~/plugins/firebase.js'
 
 export const state = () => ({
   uid: null,
@@ -29,9 +30,22 @@ export const actions = {
       name: user.displayName,
       email: user.email,
       icon: user.photoURL + '?type=large',
-      uid: user.uid
+      uid: user.uid,
+      gender: '',
+      birthday: ''
     }
-
+    await db.collection('users').doc(user.uid).get().then((doc) => {
+      if (doc.exists) {
+        console.log('Sign In.')
+        userInfo.gender = doc.data().gender
+        userInfo.birthday = doc.data().birthday
+      } else {
+        console.log('Sign Up.')
+        db.collection('users').doc(user.uid).set(userInfo)
+      }
+    }).catch((error) => {
+      console.error('Error getting document:', error)
+    })
     await dispatch('setUSER', userInfo)
     await dispatch('saveUID', userInfo.uid)
   },

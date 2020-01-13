@@ -1,13 +1,30 @@
 {
   "explain": "Wastim(ウェイスティム)は1日の無駄時間を認識するためのアプリです。<br>無駄に感じた合計時間を1日に1回登録していただき、自分自身の時間の使い方の振り返りや、気づきによる意識改革につながることを願い作成しました。",
+  "signup": {
+    "txt": "サインアップ",
+    "name": "名前",
+    "birthday": "生年月日",
+    "gender": "性別",
+    "man": "男性",
+    "woman": "女性",
+    "register": "登録"
+  },
   "account": {
     "title": "プロフィール",
+    "user-info": "ユーザ情報",
     "setting": "言語設定",
     "logout": "ログアウト"
+  },
+  "setting": {
+    "lagn": "言語設定"
   },
   "error": {
     "auth/account-exists-with-different-credential": "このメールアドレスはすでにGoogleアカウントに紐づいています。そのためGoogleアカウントにてサインインしてください。",
     "auth/network-request-failed": "インターネットに接続されていません。",
-    "auth/operation-not-supported-in-this-environment": ""
+    "auth/operation-not-supported-in-this-environment": "",
+    "empty-birthday": "生年月日が未入力です。",
+    "empty-gender": "性別が未入力です。",
+    "invalid-birthday": "生年月日が不正です。",
+    "invalid-gender": "性別が不正です。"
   }
 }

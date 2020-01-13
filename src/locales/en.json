@@ -1,13 +1,29 @@
 {
   "explain": "wastim can record your waste-time.",
+  "signup": {
+    "txt": "Sign Up",
+    "name": "Name",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "man": "Man",
+    "woman": "Woman",
+    "register": "Register"
+  },
   "account": {
     "title": "User Profile",
-    "setting": "Language Setting",
+    "user-info": "User Info",
     "logout": "Logout"
+  },
+  "setting": {
+    "lagn": "Language Setting"
   },
   "error": {
     "auth/account-exists-with-different-credential": "already use google",
     "auth/network-request-failed": "no network",
-    "auth/operation-not-supported-in-this-environment": ""
+    "auth/operation-not-supported-in-this-environment": "",
+    "empty-birthday": "The birthday is required.",
+    "empty-gender": "The gender is required.",
+    "invalid-birthday": "The birthday is invalid.",
+    "invalid-gender": "The gender is invalid."
   }
 }

@@ -190,7 +190,7 @@ body.top {
     font-weight: 500;
     height: auto;
     line-height: normal;
-    max-width: 260px;
+    max-width: 300px;
     min-height: 40px;
     padding: 15px 30px;
     text-align: left;
