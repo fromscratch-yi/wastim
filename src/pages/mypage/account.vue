@@ -111,7 +111,6 @@ export default {
         this.formDone = false
         this.loading = false
       } else {
-        console.log(this.birthday, this.gender)
         await db.collection('users').doc(user.uid).update({
           birthday: this.birthday,
           gender: this.gender
@@ -164,7 +163,7 @@ export default {
         position: relative;
         z-index: 4;
         h1 {
-          margin-bottom: 35px;
+          margin-bottom: 30px;
           font-size: 18px;
           color: #333;
         }
@@ -196,7 +195,7 @@ export default {
       width: calc(90% - 30px);
       margin: 0 auto 10px;
       border-bottom: 1px solid #ccc;
-      padding: 10px 15px;
+      padding: 5px 15px 10px;
       .label {
         padding: 10px;
         border-radius: 50%;
@@ -286,6 +285,7 @@ export default {
       z-index: 15;
       overflow: auto;
       -webkit-overflow-scrolling: touch;
+      transition: all  1s ease;
       .inner {
         max-width: 450px;
         position: absolute;
@@ -347,10 +347,12 @@ export default {
               background: transparent;
               box-sizing: border-box;
               font-size: 16px;
+              -webkit-appearance: none;
             }
             input::-webkit-calendar-picker-indicator {
                 opacity: 0;
                 width: 30px;
+                -webkit-appearance: none;
             }
             input::-webkit-inner-spin-button{
               -webkit-appearance: none;
@@ -393,9 +395,9 @@ export default {
               height: 0.75rem;
               content: '';
               -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
-                      transition:         transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+              transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
               -webkit-transform: scale(0, 0);
-                      transform: scale(0, 0);
+              transform: scale(0, 0);
               border-radius: 50%;
               background: linear-gradient(120deg,#f6d365,#fda085);
               background: -webkit-linear-gradient(120deg,#f6d365,#fda085);
@@ -420,7 +422,7 @@ export default {
         .submit_wrap {
           button {
             display: block;
-            width: 60%;
+            width: 85%;
             margin: 20px auto 0;
             padding: 15px 30px;
             text-align: center;

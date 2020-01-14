@@ -36,7 +36,7 @@ module.exports = {
     background_color: '#ffffff',
     theme_color: '#fda085',
     display: 'standalone',
-    orientation: 'landscape-primary'
+    orientation: 'portrait'
   },
   /*
   ** Customize the progress-bar color

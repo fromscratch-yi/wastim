@@ -16,7 +16,7 @@
     "logout": "ログアウト"
   },
   "setting": {
-    "lagn": "言語設定"
+    "lang": "言語設定"
   },
   "error": {
     "auth/account-exists-with-different-credential": "このメールアドレスはすでにGoogleアカウントに紐づいています。そのためGoogleアカウントにてサインインしてください。",

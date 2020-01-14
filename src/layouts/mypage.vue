@@ -92,7 +92,6 @@ export default {
         this.formDone = false
         this.loading = false
       } else {
-        console.log(this.birthday, this.gender)
         await db.collection('users').doc(user.uid).update({
           birthday: this.birthday,
           gender: this.gender

@@ -15,7 +15,7 @@
     "logout": "Logout"
   },
   "setting": {
-    "lagn": "Language Setting"
+    "lang": "Language Setting"
   },
   "error": {
     "auth/account-exists-with-different-credential": "already use google",
