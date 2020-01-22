@@ -3,7 +3,7 @@
   section.container(v-else)
     div(v-if="user")
       h1 Setting
-      p.wrap_txt {{ this.$t('setting.lang') }}
+      p.wrap_txt {{ $t('setting.lang') }}
       div.locale_wrap
         p: nuxt-link(:to="switchLocalePath('en')") EN
         p: nuxt-link(:to="switchLocalePath('ja')") JA

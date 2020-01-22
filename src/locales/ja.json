@@ -23,7 +23,16 @@
     "gender": "性別",
     "man": "男性",
     "woman": "女性",
-    "register": "登録"
+    "register": "登録",
+    "target": "対象項目",
+    "target-categories": {
+      "housework": "家事",
+      "childcare": "育児",
+      "work": "仕事",
+      "skillup": "自己学習",
+      "diet": "食生活",
+      "exercise": "運動"
+    }
   },
   "account": {
     "title": "プロフィール",
@@ -40,6 +49,7 @@
     "auth/operation-not-supported-in-this-environment": "",
     "empty-birthday": "生年月日が未入力です。",
     "empty-gender": "性別が未入力です。",
+    "empty-target-categories": "対象項目が未入力です。",
     "invalid-birthday": "生年月日が不正です。",
     "invalid-gender": "性別が不正です。"
   }

@@ -33,6 +33,7 @@ export const actions = {
       icon: user.photoURL + '?type=large',
       uid: user.uid,
       gender: '',
+      targetCategories: [],
       year: '',
       month: '',
       day: ''
@@ -41,6 +42,7 @@ export const actions = {
       if (doc.exists) {
         console.log('Sign In.')
         userInfo.gender = doc.data().gender
+        userInfo.targetCategories = doc.data().targetCategories
         userInfo.year = doc.data().year
         userInfo.month = doc.data().month
         userInfo.day = doc.data().day

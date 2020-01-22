@@ -1,28 +1,28 @@
 <template lang="pug">
   div
-    h3.score_register {{ this.$t('add-form.title') }}
+    h3.score_register {{ $t('add-form.title') }}
     .add_contents
       transition-group.transition_wrap(tag="div" :name="transName")
         div.inner#docExist(v-if="docExist" key="docExist")
-          p.label_txt {{ this.$t('add-form.label-exist') }}
+          p.label_txt {{ $t('add-form.label-exist') }}
           table.form_wrap
             tbody
               tr
-                th {{ this.$t('add-form.confirm-date') }}
+                th {{ $t('add-form.confirm-date') }}
                 td {{ date.replace('-', ' / ').replace('-', ' / ') }}
               tr
-                th {{ this.$t('add-form.confirm-score') }}
+                th {{ $t('add-form.confirm-score') }}
                 td {{ score }}
               tr
-                th {{ this.$t('add-form.confirm-reason') }}
+                th {{ $t('add-form.confirm-reason') }}
                 td {{ getReasonName() }}
 
         div.inner#date(v-else-if="step === 1" key="step1")
-          p.label_txt {{ this.$t('add-form.label-date') }}
+          p.label_txt {{ $t('add-form.label-date') }}
           label.form_wrap: input(type="date" :max="dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + dateObj.getDate()" v-model="date" @change="stepValidate()")
 
         div.inner#score(v-else-if="step === 2" key="step2")
-          p.label_txt {{ date.replace('-', '/').replace('-', '/') + this.$t('add-form.label-score') }}
+          p.label_txt {{ date.replace('-', '/').replace('-', '/') + $t('add-form.label-score') }}
           .form_wrap
             label(v-for="scoreName in scores" :key="scoreName" v-bind:for="scoreName" v-bind:class="scoreName")
               input(name="score" type="radio" :id="scoreName" :value="scoreName" v-model="score" @change="validAndNext()")
@@ -32,31 +32,31 @@
               p {{ scoreName }}
 
         div.inner#reason(v-else-if="step === 3" key="step3")
-          p.label_txt {{ this.$t('add-form.label-reason') }}
+          p.label_txt {{ $t('add-form.label-reason') }}
           .form_wrap
             select(name="reason" v-model="reason" @change="validAndNext()")
-              option(value="" disabled selected) {{ this.$t('add-form.select-init') }}
+              option(value="" disabled selected) {{ $t('add-form.select-init') }}
               option(v-for="(doc, idx) in scoreList" :key="doc.id" :value="doc.id" v-html="doc.name" :selected="{ 'selected': idx === 0 }")
-              option(value="other") {{ this.$t('add-form.other') }}
+              option(value="other") {{ $t('add-form.other') }}
               optgroup(label="")
 
         div.inner#detail(v-else-if="step === 4" key="step4")
-          p.label_txt {{ this.$t('add-form.label-detail') }}
+          p.label_txt {{ $t('add-form.label-detail') }}
           p.form_wrap
-           textarea(name="reason" rows="3" cols="60" maxlength="50" :placeholder="this.$t('add-form.placeholder')" v-model="detail" @change="stepValidate()")
+           textarea(name="reason" rows="3" cols="60" maxlength="50" :placeholder="$t('add-form.placeholder')" v-model="detail" @change="stepValidate()")
 
         div.inner#confirm(v-else-if="step === 5" key="step5")
-          p.label_txt {{ this.$t('add-form.label-confirm') }}
+          p.label_txt {{ $t('add-form.label-confirm') }}
           table.form_wrap
             tbody
               tr
-                th {{ this.$t('add-form.confirm-date') }}
+                th {{ $t('add-form.confirm-date') }}
                 td {{ date.replace('-', ' / ').replace('-', ' / ') }}
               tr
-                th {{ this.$t('add-form.confirm-score') }}
+                th {{ $t('add-form.confirm-score') }}
                 td {{ score }}
               tr
-                th {{ this.$t('add-form.confirm-reason') }}
+                th {{ $t('add-form.confirm-reason') }}
                 td {{ detail ? detail : getReasonName() }}
 
       div.button_wrap(v-if="!docExist")

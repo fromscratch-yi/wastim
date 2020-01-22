@@ -1,17 +1,17 @@
 <template lang="pug">
   Loading(v-if="loading")
   .contents(v-else-if="user")
-    .mypage_wrap(v-if="user.gender && user.year && user.month && user.day")
+    .mypage_wrap(v-if="user.gender && user.targetCategories && user.year && user.month && user.day")
       nuxt
       my-nav
     .signup_wrap(v-else)
       .inner
         h1.logo: img(src="~assets/images/logo.png" alt="Wastim")
-        p.signup_txt 〜{{ this.$t('signup.txt') }}〜
-        p.label {{ this.$t('signup.name') }}
-        .form_wrap.name
-          p {{ user.name }}
-        p.label {{ this.$t('signup.birthday') }}
+        p.signup_txt 〜{{ $t('signup.txt') }}〜
+        //- p.label {{ $t('signup.name') }}
+        //- .form_wrap.name
+        //-   p {{ user.name }}
+        p.label {{ $t('signup.birthday') }}
         .form_wrap.birthday
           .select_wrap
             select(name="year" v-model="year" @change="changeForm")
@@ -27,17 +27,37 @@
             select(name="month" v-model="day" @change="changeForm")
               option(value="" disabled selected) d
               option(v-for="n in 31" :value="n") {{ ('0' + n).slice(-2) }}
-        p.label {{ this.$t('signup.gender') }}
+        p.label {{ $t('signup.gender') }}
         .form_wrap.gender
           label(for="man")
             input#man(type="radio" name="gender" value="man" v-model="gender" @change="changeForm")
-            | {{ this.$t('signup.man') }}
+            | {{ $t('signup.man') }}
           label(for="woman")
             input#woman(type="radio" name="gender" value="woman" v-model="gender" @change="changeForm")
-            | {{ this.$t('signup.woman') }}
+            | {{ $t('signup.woman') }}
+        p.label {{ $t('signup.target') }}
+        .form_wrap.target_categories
+          label(for="housework")
+            input#housework(type="checkbox" name="target_categories" value="housework" v-model="targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.housework') }}
+          label(for="childcare")
+            input#childcare(type="checkbox" name="target_categories" value="childcare" v-model="targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.childcare') }}
+          label(for="work")
+            input#work(type="checkbox" name="target_categories" value="work" v-model="targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.work') }}
+          label(for="skillup")
+            input#skillup(type="checkbox" name="target_categories" value="skillup" v-model="targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.skillup') }}
+          label(for="diet")
+            input#diet(type="checkbox" name="target_categories" value="diet" v-model="targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.diet') }}
+          label(for="exercise")
+            input#exercise(type="checkbox" name="target_categories" value="exercise" v-model="targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.exercise') }}
         .submit_wrap
-          button(type="submit" @click="signUp(user)" v-bind:disabled="!formDone") {{ this.$t('signup.register') }}
-          .error_wrap(v-if="error") {{ this.$t('error.' + error) }}
+          button(type="submit" @click="signUp(user)" v-bind:disabled="!formDone") {{ $t('signup.register') }}
+          .error_wrap(v-if="error") {{ $t('error.' + error) }}
       .area
         BgAnimation
 </template>
@@ -60,6 +80,7 @@ export default {
     return {
       loading: true,
       gender: '',
+      targetCategories: [],
       year: '',
       month: '',
       day: '',
@@ -115,7 +136,8 @@ export default {
           year: this.year,
           month: this.month,
           day: this.day,
-          gender: this.gender
+          gender: this.gender,
+          targetCategories: this.targetCategories
         })
         await window.location.reload()
       }
@@ -125,6 +147,8 @@ export default {
         this.error = 'empty-birthday'
       } else if (!this.gender) {
         this.error = 'empty-gender'
+      } else if (this.targetCategories.length === 0) {
+        this.error = 'empty-target-categories'
       } else if (!(this.year + '-' + ('0' + this.month).slice(-2) + '-' + ('0' + this.day).slice(-2)).match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}(\s-\s[0-9]{4}-[0-9]{2}-[0-9]{2}|\s[0-9]{2}:[0-9]{2})?$/)) {
         this.error = 'invalid-birthday'
       } else if (this.gender === 'man' || this.gender === 'woman') {
@@ -212,6 +236,54 @@ export default {
       }
       .gender {
         label {
+          line-height: 135%;
+          position: relative;
+          margin: 0.5rem;
+          cursor: pointer;
+          input {
+            position: relative;
+            margin: 0 0.7rem 0 0;
+            cursor: pointer;
+          }
+          input::before {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0.125rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            content: '';
+            -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+                    transition:         transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+            -webkit-transform: scale(0, 0);
+                    transform: scale(0, 0);
+            border-radius: 50%;
+            background: linear-gradient(120deg,#f6d365,#fda085);
+            background: -webkit-linear-gradient(120deg,#f6d365,#fda085);
+          }
+          input:checked::before {
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+          }
+          input::after {
+            position: absolute;
+            top: -0.25rem;
+            left: -0.125rem;
+            width: 1rem;
+            height: 1rem;
+            content: '';
+            border: 2px solid #f2f2f2;
+            border-radius: 50%;
+            background: #ffffff;
+          }
+        }
+      }
+      .target_categories {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        label {
+          width: 40%;
           line-height: 135%;
           position: relative;
           margin: 0.5rem;

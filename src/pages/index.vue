@@ -9,7 +9,7 @@
           p: nuxt-link(:to="switchLocalePath('ja')") JA
       .mv
         h1.logo: img(src="~assets/images/logo-wh.png" alt="Wastim")
-        p.explain(v-html="this.$t('explain')")
+        p.explain(v-html="$t('explain')")
       ul.signin_wrap
         li
           button.signin_btn(@click.prevent="fbGoogleLogin")

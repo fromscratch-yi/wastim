@@ -23,7 +23,16 @@
     "gender": "Gender",
     "man": "Man",
     "woman": "Woman",
-    "register": "Register"
+    "register": "Register",
+    "target": "Target Categories",
+    "target-categories": {
+      "housework": "Housework",
+      "childcare": "Childcare",
+      "work": "Work",
+      "skillup": "Skill Up",
+      "diet": "Diet",
+      "exercise": "Exercise"
+    }
   },
   "account": {
     "title": "User Profile",
@@ -40,6 +49,7 @@
     "auth/operation-not-supported-in-this-environment": "",
     "empty-birthday": "The birthday is required.",
     "empty-gender": "The gender is required.",
+    "empty-target-categories": "The target categories is required.",
     "invalid-birthday": "The birthday is invalid.",
     "invalid-gender": "The gender is invalid."
   }

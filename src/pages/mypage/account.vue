@@ -5,27 +5,33 @@
       button.edit(type="button" @click="edit")
         img(src="~assets/images/edit.png" alt="" width="25" height="25")
       div.mv_inner
-        h1 {{ this.$t('account.title') }}
+        h1 {{ $t('account.title') }}
         p.icon: img(v-if="user.icon" :src="user.icon" :alt="user.name + ' icon'")
         p.name {{ user.name }}
       BgAnimation
-    p.wrap_txt {{ this.$t('account.user-info') }}
+    p.wrap_txt {{ $t('account.user-info') }}
     dl.user_info
       dt.label: BirthdaySvg
       dd
-        p.txt {{ this.$t('signup.birthday') }}
+        p.txt {{ $t('signup.birthday') }}
         p {{ user.year }} / {{ ('0' + user.month).slice(-2) }} / {{ ('0' + user.day).slice(-2) }}
     dl.user_info
       dt.label: GenderSvg
       dd
-        p.txt {{ this.$t('signup.gender') }}
-        p {{ this.$t('signup.' + user.gender) }}
-    button.logout(type="button" @click='doLogout') {{ this.$t('account.logout') }}
+        p.txt {{ $t('signup.gender') }}
+        p {{ $t('signup.' + user.gender) }}
+    dl.user_info
+      dt.label: CheckSvg
+      dd
+        p.txt {{ $t('signup.target') }}
+        p.target_list
+          span(v-for="(category, index) in user.targetCategories" :key="category") ・{{ $t('signup.target-categories.' + category) }}
+    button.logout(type="button" @click='doLogout') {{ $t('account.logout') }}
 
     .edit_wrap(v-if="isEdit")
       .inner
         button.close(type="button" @click="close"): img(src="~assets/images/close.png" alt="" width="25" height="25")
-        p.label {{ this.$t('signup.birthday') }}
+        p.label {{ $t('signup.birthday') }}
         .form_wrap.birthday
           .select_wrap
             select(name="year" v-model="year" v-init:year="user.year" @change="changeForm")
@@ -38,17 +44,37 @@
           .select_wrap
             select(name="day" v-model="day" v-init:day="user.day" @change="changeForm")
               option(v-for="n in 31" :value="n") {{ ('0' + n).slice(-2) }}
-        p.label {{ this.$t('signup.gender') }}
+        p.label {{ $t('signup.gender') }}
         .form_wrap.gender
           label(for="man")
             input#man(type="radio" name="gender" value="man" v-model="gender" v-init:gender="user.gender" @change="changeForm")
-            | {{ this.$t('signup.man') }}
+            | {{ $t('signup.man') }}
           label(for="woman")
             input#woman(type="radio" name="gender" value="woman" v-model="gender" v-init:gender="user.gender" @change="changeForm")
-            | {{ this.$t('signup.woman') }}
+            | {{ $t('signup.woman') }}
+        p.label {{ $t('signup.target') }}
+        .form_wrap.target_categories
+          label(for="housework")
+            input#housework(type="checkbox" name="target_categories" value="housework" v-model="targetCategories" v-init:targetCategories="user.targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.housework') }}
+          label(for="childcare")
+            input#childcare(type="checkbox" name="target_categories" value="childcare" v-model="targetCategories" v-init:targetCategories="user.targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.childcare') }}
+          label(for="work")
+            input#work(type="checkbox" name="target_categories" value="work" v-model="targetCategories" v-init:targetCategories="user.targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.work') }}
+          label(for="skillup")
+            input#skillup(type="checkbox" name="target_categories" value="skillup" v-model="targetCategories" v-init:targetCategories="user.targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.skillup') }}
+          label(for="diet")
+            input#diet(type="checkbox" name="target_categories" value="diet" v-model="targetCategories" v-init:targetCategories="user.targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.diet') }}
+          label(for="exercise")
+            input#exercise(type="checkbox" name="target_categories" value="exercise" v-model="targetCategories" v-init:targetCategories="user.targetCategories" @change="changeForm")
+            | {{ $t('signup.target-categories.exercise') }}
         .submit_wrap
-          button(type="submit" @click="signUp(user)" v-bind:disabled="!formDone") {{ this.$t('signup.register') }}
-          .error_wrap(v-if="error") {{ this.$t('error.' + error) }}
+          button(type="submit" @click="signUp(user)" v-bind:disabled="!formDone") {{ $t('signup.register') }}
+          .error_wrap(v-if="error") {{ $t('error.' + error) }}
 </template>
 
 <script>
@@ -57,6 +83,7 @@ import Loading from '@/components/Loading'
 import BgAnimation from '@/components/BgAnimation'
 import BirthdaySvg from '@/assets/images/birthday.svg?inline'
 import GenderSvg from '@/assets/images/gender.svg?inline'
+import CheckSvg from '@/assets/images/check_list.svg?inline'
 import { db } from '@/plugins/firebase.js'
 
 export default {
@@ -64,7 +91,8 @@ export default {
     Loading,
     BgAnimation,
     BirthdaySvg,
-    GenderSvg
+    GenderSvg,
+    CheckSvg
   },
   directives: {
     init: {
@@ -79,6 +107,7 @@ export default {
       loading: false,
       isEdit: false,
       gender: '',
+      targetCategories: [],
       year: 1970,
       month: 1,
       day: 1,
@@ -130,7 +159,8 @@ export default {
           year: this.year,
           month: this.month,
           day: this.day,
-          gender: this.gender
+          gender: this.gender,
+          targetCategories: this.targetCategories
         })
         await window.location.reload()
       }
@@ -140,6 +170,8 @@ export default {
         this.error = 'empty-birthday'
       } else if (!this.gender) {
         this.error = 'empty-gender'
+      } else if (this.targetCategories.length === 0) {
+        this.error = 'empty-target-categories'
       } else if (!(this.year + '-' + ('0' + this.month).slice(-2) + '-' + ('0' + this.day).slice(-2)).match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}(\s-\s[0-9]{4}-[0-9]{2}-[0-9]{2}|\s[0-9]{2}:[0-9]{2})?$/)) {
         this.error = 'invalid-birthday'
       } else if (this.gender === 'man' || this.gender === 'woman') {
@@ -232,6 +264,10 @@ export default {
           color: #999;
           margin-bottom: 4px;
           font-size: 14px;
+        }
+        .target_list span {
+          display: inline-block;
+          margin-right: 15px;
         }
       }
     }
@@ -392,6 +428,54 @@ export default {
               transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
               -webkit-transform: scale(0, 0);
               transform: scale(0, 0);
+              border-radius: 50%;
+              background: linear-gradient(120deg,#f6d365,#fda085);
+              background: -webkit-linear-gradient(120deg,#f6d365,#fda085);
+            }
+            input:checked::before {
+              -webkit-transform: scale(1, 1);
+              transform: scale(1, 1);
+            }
+            input::after {
+              position: absolute;
+              top: -0.25rem;
+              left: -0.125rem;
+              width: 1rem;
+              height: 1rem;
+              content: '';
+              border: 2px solid #f2f2f2;
+              border-radius: 50%;
+              background: #ffffff;
+            }
+          }
+        }
+        .target_categories {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          label {
+            width: 40%;
+            line-height: 135%;
+            position: relative;
+            margin: 0.5rem;
+            cursor: pointer;
+            input {
+              position: relative;
+              margin: 0 0.7rem 0 0;
+              cursor: pointer;
+            }
+            input::before {
+              position: absolute;
+              z-index: 1;
+              top: 0;
+              left: 0.125rem;
+              width: 0.75rem;
+              height: 0.75rem;
+              content: '';
+              -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+                      transition:         transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
+              -webkit-transform: scale(0, 0);
+                      transform: scale(0, 0);
               border-radius: 50%;
               background: linear-gradient(120deg,#f6d365,#fda085);
               background: -webkit-linear-gradient(120deg,#f6d365,#fda085);
