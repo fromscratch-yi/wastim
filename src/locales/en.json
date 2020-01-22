@@ -1,5 +1,21 @@
 {
   "explain": "wastim can record your waste-time.",
+  "add-form": {
+    "title": "Score registration",
+    "label-date": "Please select a date to evaluate.",
+    "label-exist": "Already been registered. Do you update?",
+    "label-score": " : Please select a rating",
+    "label-reason": "Please select a rating reason.",
+    "label-detail": "Please enter a reason.",
+    "label-confirm": "Confirmation of registration contents",
+    "select-init": "Please select one",
+    "other": "Other reason",
+    "placeholder": "Write concisely within 50 characters.",
+    "confirm-date": "Date",
+    "confirm-score": "Score",
+    "confirm-reason": "Reason",
+    "confirm": "Are you sure you want to register your score?"
+  },
   "signup": {
     "txt": "Sign Up",
     "name": "Name",
@@ -15,11 +31,12 @@
     "logout": "Logout"
   },
   "setting": {
-    "lang": "Language Setting"
+    "lang": "Language Setting",
+    "delete-confirm": "Are you sure you want to permanently delete this User Data?"
   },
   "error": {
-    "auth/account-exists-with-different-credential": "already use google",
-    "auth/network-request-failed": "no network",
+    "auth/account-exists-with-different-credential": "This emai addresss has already used by Google SignIn.",
+    "auth/network-request-failed": "Network request failed.",
     "auth/operation-not-supported-in-this-environment": "",
     "empty-birthday": "The birthday is required.",
     "empty-gender": "The gender is required.",

@@ -8,14 +8,13 @@
         h1 {{ this.$t('account.title') }}
         p.icon: img(v-if="user.icon" :src="user.icon" :alt="user.name + ' icon'")
         p.name {{ user.name }}
-        p.uid 【ID : {{ uid }}】
       BgAnimation
     p.wrap_txt {{ this.$t('account.user-info') }}
     dl.user_info
       dt.label: BirthdaySvg
       dd
         p.txt {{ this.$t('signup.birthday') }}
-        p {{ (user.birthday).replace('-', '/').replace('-', '/') }}
+        p {{ user.year }} / {{ ('0' + user.month).slice(-2) }} / {{ ('0' + user.day).slice(-2) }}
     dl.user_info
       dt.label: GenderSvg
       dd
@@ -28,7 +27,17 @@
         button.close(type="button" @click="close"): img(src="~assets/images/close.png" alt="" width="25" height="25")
         p.label {{ this.$t('signup.birthday') }}
         .form_wrap.birthday
-          label: input(type="date" min="1980-01-01" :max="date.getFullYear() + '-' + date.getMonth() + 1 + '-' + date.getDate()" v-model="birthday" v-init:birthday="user.birthday" @change="changeForm")
+          .select_wrap
+            select(name="year" v-model="year" v-init:year="user.year" @change="changeForm")
+              option(v-for="n in years" :value="n") {{ n }}
+          p /
+          .select_wrap
+            select(name="month" v-model="month" v-init:month="user.month" @change="changeForm")
+              option(v-for="n in 12" :value="n") {{ ('0' + n).slice(-2) }}
+          p.before_day /
+          .select_wrap
+            select(name="day" v-model="day" v-init:day="user.day" @change="changeForm")
+              option(v-for="n in 31" :value="n") {{ ('0' + n).slice(-2) }}
         p.label {{ this.$t('signup.gender') }}
         .form_wrap.gender
           label(for="man")
@@ -69,9 +78,10 @@ export default {
     return {
       loading: false,
       isEdit: false,
-      date: new Date(),
       gender: '',
-      birthday: '',
+      year: 1970,
+      month: 1,
+      day: 1,
       formDone: '',
       error: ''
     }
@@ -80,7 +90,11 @@ export default {
     ...mapGetters('modules/user', [
       'uid',
       'user'
-    ])
+    ]),
+    years () {
+      const year = new Date().getFullYear()
+      return Array.from({ length: year - 1970 }, (value, index) => 1971 + index)
+    }
   },
   methods: {
     ...mapActions('modules/user', [
@@ -98,7 +112,8 @@ export default {
     },
     changeForm () {
       this.error = ''
-      if (this.validate()) {
+      this.validate()
+      if (this.error) {
         this.formDone = false
       } else {
         this.formDone = true
@@ -112,26 +127,26 @@ export default {
         this.loading = false
       } else {
         await db.collection('users').doc(user.uid).update({
-          birthday: this.birthday,
+          year: this.year,
+          month: this.month,
+          day: this.day,
           gender: this.gender
         })
         await window.location.reload()
       }
     },
     validate () {
-      let error = ''
-      if (!this.birthday) {
-        error = 'empty-birthday'
+      if (!this.year || !this.month || !this.day) {
+        this.error = 'empty-birthday'
       } else if (!this.gender) {
-        error = 'empty-gender'
-      } else if (!this.birthday.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}(\s-\s[0-9]{4}-[0-9]{2}-[0-9]{2}|\s[0-9]{2}:[0-9]{2})?$/)) {
-        error = 'invalid-birthday'
+        this.error = 'empty-gender'
+      } else if (!(this.year + '-' + ('0' + this.month).slice(-2) + '-' + ('0' + this.day).slice(-2)).match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}(\s-\s[0-9]{4}-[0-9]{2}-[0-9]{2}|\s[0-9]{2}:[0-9]{2})?$/)) {
+        this.error = 'invalid-birthday'
       } else if (this.gender === 'man' || this.gender === 'woman') {
-        error = ''
+        this.error = ''
       } else {
-        error = 'invalid-gender'
+        this.error = 'invalid-gender'
       }
-      return error
     }
   },
   head: {
@@ -174,10 +189,12 @@ export default {
             width: 100px;
             border: 2px solid #fff;
             border-radius: 50%;
+            background-color: #fff;
           }
         }
         .name {
           margin: 15px 0 8px;
+          font-size: 18px;
         }
       }
       .circles {
@@ -187,6 +204,7 @@ export default {
     .wrap_txt {
       margin: 30px auto 10px;
       text-align: center;
+      font-size: 18px;
     }
     .user_info {
       display: flex;
@@ -333,46 +351,22 @@ export default {
           }
         }
         .birthday {
-          label {
+          display: flex;
+          .select_wrap {
             position: relative;
-            display: inline-block;
-            width: calc(100% - 4px);
-            height: 36px;
-            input {
-              position: relative;
-              padding: 0 10px;
-              width: 100%;
-              height: 36px;
-              border: 0;
-              background: transparent;
-              box-sizing: border-box;
+            select {
+              font: 400 11px system-ui;
               font-size: 16px;
               -webkit-appearance: none;
-            }
-            input::-webkit-calendar-picker-indicator {
-                opacity: 0;
-                width: 30px;
-                -webkit-appearance: none;
-            }
-            input::-webkit-inner-spin-button{
-              -webkit-appearance: none;
-            }
-            input::-webkit-clear-button{
-              -webkit-appearance: none;
+              -ms-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              border: none;
+              background-color: #fff;
             }
           }
-          label::before {
-            position: absolute;
-            content: "";
-            top: 50%;
-            right: 5px;
-            width: 30px;
-            height: 30px;
-            margin-top: -15px;
-            background-image: url("~assets/images/icon_calendar.png");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
+          p {
+            margin: 0 5px;
           }
         }
         .gender {

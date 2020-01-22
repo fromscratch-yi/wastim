@@ -33,13 +33,17 @@ export const actions = {
       icon: user.photoURL + '?type=large',
       uid: user.uid,
       gender: '',
-      birthday: ''
+      year: '',
+      month: '',
+      day: ''
     }
     await db.collection('users').doc(user.uid).get().then((doc) => {
       if (doc.exists) {
         console.log('Sign In.')
         userInfo.gender = doc.data().gender
-        userInfo.birthday = doc.data().birthday
+        userInfo.year = doc.data().year
+        userInfo.month = doc.data().month
+        userInfo.day = doc.data().day
       } else {
         console.log('Sign Up.')
         db.collection('users').doc(user.uid).set(userInfo)

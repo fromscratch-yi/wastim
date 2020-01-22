@@ -8,21 +8,17 @@
         DataSvg
         //- span Data
       li.add_btn
-        input#add_check(type="checkbox")
+        input#add_check(type="checkbox" value="checked" v-model="isCheck")
         label(for="add_check"): span ＋
-        div.add_form
-          ul
-            li テスト
-            li テスト
-            li テスト
-            li テスト
-        div.add_bg
       li: nuxt-link(:to="localePath('mypage-account')")
         AccountSvg
         //- span Account
       li: nuxt-link(:to="localePath('mypage-setting')")
         SettingSvg
         //- span Setting
+    div.add_form_wrap(v-bind:class="{ active: isCheck }")
+      addForm.add_form(v-bind:argDate="dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + dateObj.getDate()")
+      div.add_bg
 </template>
 
 <script>
@@ -30,17 +26,30 @@ import TopSvg from '@/assets/images/top.svg?inline'
 import DataSvg from '@/assets/images/data.svg?inline'
 import AccountSvg from '@/assets/images/account.svg?inline'
 import SettingSvg from '@/assets/images/setting.svg?inline'
+import AddForm from '@/components/AddForm'
 export default {
   components: {
     TopSvg,
     DataSvg,
     AccountSvg,
-    SettingSvg
+    SettingSvg,
+    AddForm
+  },
+  data () {
+    return {
+      isCheck: '',
+      dateObj: new Date()
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  @mixin landscape {
+    @media screen and (orientation: landscape) {
+      @content;
+    }
+  }
   .my_nav_wrap {
     position: fixed;
     left: 0;
@@ -124,55 +133,72 @@ export default {
             transform:rotateZ(135deg);
           }
         }
-        #add_check:checked+label+.add_form {
-          bottom: -45%;
-        }
-        .add_form {
-          position: fixed;
-          box-sizing: border-box;
-          border-top-left-radius: 20px;
-          border-top-right-radius: 20px;
-          width: 100%;
-          height: 100%;
-          background: #fff;
-          color: #333;
-          padding: 20px;
-          bottom: -110%;
-          left: 0;
-          right: 0;
-          transition: bottom 1s;
-          z-index: 3;
-        }
-        #add_check:checked+label+.add_form+.add_bg {
-          display: block;
-        }
-        .add_bg {
-          display: none;
-          position: fixed;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          bottom: 0;
-          right: 0;
-          left: 0;
-          background: rgba(51, 51, 51, 0.3);
-          animation: fadeIn 1s ease 0s 1 normal;
-          -webkit-animation: fadeIn 1s ease 0s 1 normal;
-        }
       }
       li:last-child {
         border-right: none;
       }
     }
-  }
+    .add_form_wrap {
+      .add_form {
+        position: fixed;
+        box-sizing: border-box;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        width: 100%;
+        height: 400px;
+        max-height: 95%;
+        background: #fff;
+        color: #333;
+        padding: 0 0 75px;
+        bottom: -110%;
+        left: 0;
+        right: 0;
+        transition: bottom 1s;
+        z-index: 3;
+      }
+      .add_bg {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: -99;
+        background: rgba(51, 51, 51, 0.3);
+        animation: fadeOut 1s ease 0s 1 normal;
+        -webkit-animation: fadeOut 1s ease 0s 1 normal;
+      }
+    }
+    .add_form_wrap.active {
+      .add_form {
+        bottom: 0%;
+      }
+      .add_bg {
+        display: block;
+        animation: fadeIn 1s ease 0s 1 normal;
+        -webkit-animation: fadeIn 1s ease 0s 1 normal;
 
+      }
+    }
+  }
   @keyframes fadeIn {
-      0% {opacity: 0}
-      100% {opacity: 1}
+    0% {opacity: 0}
+    100% {opacity: 1}
   }
 
   @-webkit-keyframes fadeIn {
-      0% {opacity: 0}
-      100% {opacity: 1}
+    0% {opacity: 0}
+    100% {opacity: 1}
+  }
+  @keyframes fadeOut {
+    100% {opacity: 0}
+    0% {opacity: 1}
+  }
+
+  @-webkit-keyframes fadeOut {
+    100% {opacity: 0}
+    100% {opacity: 1}
   }
 </style>

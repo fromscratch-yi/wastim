@@ -1,5 +1,21 @@
 {
   "explain": "Wastim(ウェイスティム)は1日の無駄時間を認識するためのアプリです。<br>無駄に感じた合計時間を1日に1回登録していただき、自分自身の時間の使い方の振り返りや、気づきによる意識改革につながることを願い作成しました。",
+  "add-form": {
+    "title": "スコア登録",
+    "label-date": "評価する日付を選択してください。",
+    "label-exist": "すでに登録されています。更新しますか？",
+    "label-score": "の評価を選択してください。",
+    "label-reason": "評価の理由を選択してください。",
+    "label-detail": "理由を記入してください。",
+    "label-confirm": "登録内容の確認",
+    "select-init": "選択してください。",
+    "other": "その他",
+    "placeholder": "50文字以内で簡潔に記述してください。",
+    "confirm-date": "日付",
+    "confirm-score": "スコア",
+    "confirm-reason": "理由",
+    "confirm": "スコアを登録してもよろしいですか？"
+  },
   "signup": {
     "txt": "サインアップ",
     "name": "名前",
@@ -12,11 +28,11 @@
   "account": {
     "title": "プロフィール",
     "user-info": "ユーザ情報",
-    "setting": "言語設定",
     "logout": "ログアウト"
   },
   "setting": {
-    "lang": "言語設定"
+    "lang": "言語設定",
+    "delete-confirm": "本当にデータを削除してよろしいですか？（※削除するとデータを復元できません。）"
   },
   "error": {
     "auth/account-exists-with-different-credential": "このメールアドレスはすでにGoogleアカウントに紐づいています。そのためGoogleアカウントにてサインインしてください。",

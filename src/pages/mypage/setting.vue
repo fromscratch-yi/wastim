@@ -1,20 +1,30 @@
 <template lang="pug">
-  section.container
+  Loading(v-if="loading")
+  section.container(v-else)
     div(v-if="user")
       h1 Setting
       p.wrap_txt {{ this.$t('setting.lang') }}
       div.locale_wrap
         p: nuxt-link(:to="switchLocalePath('en')") EN
         p: nuxt-link(:to="switchLocalePath('ja')") JA
+      p.wrap_txt データ削除
+      button(type="button" @click="deleteUser(user)") データ削除
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import Loading from '@/components/Loading'
+import firebase from '@/plugins/firebase'
+import { db } from '@/plugins/firebase.js'
 
 export default {
+  components: {
+    Loading
+  },
   layout: 'mypage',
   data () {
     return {
+      loading: false,
       allusers: []
     }
   },
@@ -23,6 +33,32 @@ export default {
       'uid',
       'user'
     ])
+  },
+  methods: {
+    ...mapActions('modules/user', [
+      'logout'
+    ]),
+    async deleteUser (user) {
+      this.loading = true
+      if (!window.confirm(this.$t('setting.delete-confirm'))) {
+        this.loading = false
+      } else {
+        await db.collection('daily').doc(user.uid).delete()
+        await db.collection('users').doc(user.uid).delete().then(function () {
+          console.log('Document successfully deleted')
+        }).catch(function (error) {
+          console.error('Error removing document: ', error)
+        })
+        const currentUser = firebase.auth().currentUser
+        currentUser.delete().then(function () {
+          console.log('User successfully deleted')
+        }).catch(function (error) {
+          console.log('Error removeing user: ', error)
+        })
+        await this.logout()
+        await this.$router.push(this.localePath('index'))
+      }
+    }
   },
   head: {
     bodyAttrs: {

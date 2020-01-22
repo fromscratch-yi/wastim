@@ -55,6 +55,12 @@ body {
   margin: 0;
   display: flex;
   flex-flow: column;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar {
+  display:none;
 }
 img {
   width: 100%;
