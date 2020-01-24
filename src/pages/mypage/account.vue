@@ -267,7 +267,7 @@ export default {
         }
         .target_list span {
           display: inline-block;
-          margin-right: 15px;
+          margin: 5px 10px 5px 0;
         }
       }
     }

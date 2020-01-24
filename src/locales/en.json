@@ -2,18 +2,17 @@
   "explain": "wastim can record your waste-time.",
   "add-form": {
     "title": "Score registration",
+    "done": "Done",
     "label-date": "Please select a date to evaluate.",
     "label-exist": "Already been registered. Do you update?",
     "label-score": " : Please select a rating",
-    "label-reason": "Please select a rating reason.",
-    "label-detail": "Please enter a reason.",
+    "label-diary": "Please enter a today's comment. (optional)",
     "label-confirm": "Confirmation of registration contents",
-    "select-init": "Please select one",
-    "other": "Other reason",
-    "placeholder": "Write concisely within 50 characters.",
+    "label-result": "Level of achievement",
+    "placeholder": "Write concisely within 150 characters.",
     "confirm-date": "Date",
     "confirm-score": "Score",
-    "confirm-reason": "Reason",
+    "confirm-diary": "Diary",
     "confirm": "Are you sure you want to register your score?"
   },
   "signup": {

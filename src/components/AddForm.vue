@@ -10,62 +10,83 @@
               tr
                 th {{ $t('add-form.confirm-date') }}
                 td {{ date.replace('-', ' / ').replace('-', ' / ') }}
+              tr(v-for="(category, index) in user.targetCategories")
+                th {{ $t('signup.target-categories.' + category) }}
+                td
+                  span(:class="categories[category]")
+                    GoodSvg(v-if="categories[category] == 'good'")
+                    SosoSvg(v-else-if="categories[category] == 'soso'")
+                    BadSvg(v-else-if="categories[category] == 'bad'")
+                    offSvg(v-else-if="categories[category] == 'off'")
+                  p （{{ categories[category] }}）
               tr
-                th {{ $t('add-form.confirm-score') }}
-                td {{ score }}
-              tr
-                th {{ $t('add-form.confirm-reason') }}
-                td {{ getReasonName() }}
+                th {{ $t('add-form.confirm-diary') }}
+                td {{ diary }}
 
-        div.inner#date(v-else-if="step === 1" key="step1")
+        div.inner#date(v-if="!scoreResult && !docExist && step === 1" key="step1")
           p.label_txt {{ $t('add-form.label-date') }}
           label.form_wrap: input(type="date" :max="dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + dateObj.getDate()" v-model="date" @change="stepValidate()")
 
-        div.inner#score(v-else-if="step === 2" key="step2")
-          p.label_txt {{ date.replace('-', '/').replace('-', '/') + $t('add-form.label-score') }}
-          .form_wrap
-            label(v-for="scoreName in scores" :key="scoreName" v-bind:for="scoreName" v-bind:class="scoreName")
-              input(name="score" type="radio" :id="scoreName" :value="scoreName" v-model="score" @change="validAndNext()")
+        div.inner.score(v-for="(category, index) in user.targetCategories" :id="category" v-if="!scoreResult && !docExist && step === index + 2" :key="'step' + (index + 2)")
+          p.label_txt {{ $t('signup.target-categories.' + category) + $t('add-form.label-score') }}
+          .form_wrap.score_wrap(:class="category + '_wrap'")
+            label(v-for="scoreName in scores" :key="scoreName" v-bind:for="category + '_' +scoreName" v-bind:class="scoreName")
+              input(type="radio" :name="category" :id="category + '_' +scoreName" :value="scoreName" v-model="categories[category]" @change="validAndNext()")
               GoodSvg(v-if="scoreName == 'good'")
-              SosoSvg(v-if="scoreName == 'soso'")
-              BadSvg(v-if="scoreName == 'bad'")
+              SosoSvg(v-else-if="scoreName == 'soso'")
+              BadSvg(v-else-if="scoreName == 'bad'")
               p {{ scoreName }}
+            label.off(v-if="category === 'work'" v-bind:for="category + '_off'")
+              input(type="radio" :name="category" :id="category + '_off'" value="off" v-model="categories[category]" @change="validAndNext()")
+              offSvg
+              p day off
 
-        div.inner#reason(v-else-if="step === 3" key="step3")
-          p.label_txt {{ $t('add-form.label-reason') }}
-          .form_wrap
-            select(name="reason" v-model="reason" @change="validAndNext()")
-              option(value="" disabled selected) {{ $t('add-form.select-init') }}
-              option(v-for="(doc, idx) in scoreList" :key="doc.id" :value="doc.id" v-html="doc.name" :selected="{ 'selected': idx === 0 }")
-              option(value="other") {{ $t('add-form.other') }}
-              optgroup(label="")
-
-        div.inner#detail(v-else-if="step === 4" key="step4")
-          p.label_txt {{ $t('add-form.label-detail') }}
+        div.inner#diary(v-if="!scoreResult && !docExist && step === user.targetCategories.length + 2" :key="'step' + user.targetCategories.length + 2")
+          p.label_txt {{ $t('add-form.label-diary') }}
           p.form_wrap
-           textarea(name="reason" rows="3" cols="60" maxlength="50" :placeholder="$t('add-form.placeholder')" v-model="detail" @change="stepValidate()")
+           textarea(name="diary" rows="6" cols="80" maxlength="150" :placeholder="$t('add-form.placeholder')" v-model="diary" @change="stepValidate()")
 
-        div.inner#confirm(v-else-if="step === 5" key="step5")
+        div.inner#confirm(v-if="!scoreResult && !docExist && step === user.targetCategories.length + 3" :key="'step' + user.targetCategories.length + 3")
           p.label_txt {{ $t('add-form.label-confirm') }}
           table.form_wrap
             tbody
               tr
                 th {{ $t('add-form.confirm-date') }}
                 td {{ date.replace('-', ' / ').replace('-', ' / ') }}
+              tr(v-for="(category, index) in user.targetCategories")
+                th {{ $t('signup.target-categories.' + category) }}
+                td
+                  span(:class="categories[category]")
+                    GoodSvg(v-if="categories[category] == 'good'")
+                    SosoSvg(v-else-if="categories[category] == 'soso'")
+                    BadSvg(v-else-if="categories[category] == 'bad'")
+                    offSvg(v-else-if="categories[category] == 'off'")
+                  p （{{ categories[category] }}）
               tr
-                th {{ $t('add-form.confirm-score') }}
-                td {{ score }}
-              tr
-                th {{ $t('add-form.confirm-reason') }}
-                td {{ detail ? detail : getReasonName() }}
+                th {{ $t('add-form.confirm-diary') }}
+                td {{ diary }}
 
-      div.button_wrap(v-if="!docExist")
+        div.inner#result(v-if="scoreResult" key="result")
+          p.label_txt {{ $t('add-form.label-result') }}
+          .score_wrap
+            doughnut-chart(:chart-data="chartData" :options="chartOptions" :styles="{height: '150px', position: 'relative'}")
+            .data_wrap
+              p.date {{ date.replace('-', ' / ').replace('-', ' / ') }}
+              p.score_data
+                span.my_score {{ todayScore }}
+                span.slash /
+                span  100
+                span.parsent %
+
+      div.button_wrap(v-if="!scoreResult && !docExist")
         button.prev(v-if="step !== 1" type="button" @click="prev")
-        button.next(v-if="step !== 5" type="button" v-bind:disabled="!isNext" @click="next")
-        button.submit(v-if="step === 5" type="submit" v-bind:disabled="!isNext" @click="submit(user)")
-      div.button_wrap(v-else)
+        button.next(v-if="step !== user.targetCategories.length + 3" type="button" v-bind:disabled="!isNext" @click="next")
+        button.submit(v-if="step === user.targetCategories.length + 3" type="submit" v-bind:disabled="!isNext" @click="submit(user)")
+      div.button_wrap(v-else-if="!scoreResult")
         button.prev(type="button" @click="updateBack")
         button.next(type="button" @click="update")
+      div.close_btn_wrap(v-else)
+        button.reload(type="button" @click="reload()") {{ $t('add-form.done') }}
 </template>
 
 <script>
@@ -73,12 +94,14 @@ import { mapGetters } from 'vuex'
 import GoodSvg from '@/assets/images/good.svg?inline'
 import BadSvg from '@/assets/images/bad.svg?inline'
 import SosoSvg from '@/assets/images/soso.svg?inline'
+import offSvg from '@/assets/images/off.svg?inline'
 import { db } from '@/plugins/firebase.js'
 export default {
   components: {
     GoodSvg,
     BadSvg,
-    SosoSvg
+    SosoSvg,
+    offSvg
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['argDate'],
@@ -87,15 +110,37 @@ export default {
       step: 1,
       date: this.argDate,
       dateObj: new Date(),
-      score: '',
-      reason: '',
-      detail: '',
+      diary: '',
       isNext: false,
       transName: 'next',
       scores: ['good', 'soso', 'bad'],
       scoreList: [],
       docExist: false,
-      reasonName: ''
+      todayScore: 0,
+      scoreResult: false,
+      categories: {
+        housework: '',
+        childcare: '',
+        work: '',
+        skillup: '',
+        diet: '',
+        exercise: ''
+      },
+      chartDataValues: [],
+      chartColors: ['#fab777', '#dcdcdc'],
+      chartOptions: {
+        cutoutPercentage: 75,
+        rotation: 1 * Math.PI,
+        circumference: 1 * Math.PI,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 1500,
+          easing: 'easeInOutCubic'
+        },
+        legend: {
+          display: false
+        }
+      }
     }
   },
   transition: {
@@ -105,7 +150,19 @@ export default {
     ...mapGetters('modules/user', [
       'uid',
       'user'
-    ])
+    ]),
+    chartData () {
+      return {
+        datasets: [
+          {
+            data: this.chartDataValues,
+            backgroundColor: this.chartColors,
+            borderWidth: 0
+          }
+        ],
+        labels: this.chartLabels
+      }
+    }
   },
   created () {
     this.stepValidate()
@@ -126,80 +183,97 @@ export default {
     prev () {
       this.isNext = false
       this.transName = 'prev'
-      if (this.step === 5 && this.reason !== 'other') {
-        this.step -= 2
-      } else {
-        this.step--
-      }
+      this.step--
       this.stepValidate()
     },
     next () {
+      console.log(this.step)
       this.isNext = false
       this.docExist = false
       this.transName = 'next'
       if (this.step === 1) {
-        db.collection('daily').doc(this.user.uid).collection('report').doc(this.date).get().then((doc) => {
+        db.collection(this.user.uid + '-daily').doc(this.date).get().then((doc) => {
           if (doc.exists) {
             this.date = doc.data().date
-            this.score = doc.data().score
-            this.reason = doc.data().reason
+            this.categories = {
+              housework: doc.data().housework,
+              childcare: doc.data().childcare,
+              work: doc.data().work,
+              skillup: doc.data().skillup,
+              diet: doc.data().diet,
+              exercise: doc.data().exercise
+            }
+            this.diary = doc.data().diary
             this.docExist = true
           } else {
-            this.score = ''
-            this.reason = ''
+            this.categories = {
+              housework: '',
+              childcare: '',
+              work: '',
+              skillup: '',
+              diet: '',
+              exercise: ''
+            }
+            this.diary = ''
             this.docExist = false
             this.step++
           }
         }).catch((error) => {
           console.error('Error getting document:', error)
         })
-      } else if (this.step === 3 && this.reason !== 'other') {
-        this.step += 2
       } else {
-        if (this.step === 2) {
-          this.reason = ''
-          this.getScoreList()
-        }
         this.step++
       }
       setTimeout(this.stepValidate, 700)
     },
     stepValidate () {
       this.isNext = false
-      if (this.step !== 4 && this.step !== 5 && this.reason === 'other') {
-        this.detail = ''
-      }
-      switch (this.step) {
-        case 1:
-          this.isNext = !!this.date
-          break
-        case 2:
-          this.isNext = !!this.score
-          break
-        case 3:
-          if (this.reason !== 'other') {
-            this.detail = ''
-          }
-          this.isNext = !!this.reason
-          break
-        case 4:
-          this.isNext = !!this.detail
-          break
-        case 5:
-          this.isNext = this.date && this.score && this.reason && (this.reason !== 'other' || (this.reason === 'other' && this.detail))
-          break
-        default:
+      if (this.step === 1) {
+        this.isNext = !!this.date
+      } else if (this.step >= 2 && this.step < this.user.targetCategories.length + 2) {
+        if (!this.categories[this.user.targetCategories[this.step - 2]]) {
           this.isNext = false
-          break
+        } else {
+          this.isNext = true
+        }
+      } else if (this.step === this.user.targetCategories.length + 2) {
+        this.isNext = true
+      } else if (this.step === this.user.targetCategories.length + 3) {
+        this.isNext = true
+      } else {
+        this.isNext = false
+        this.step = 1
       }
     },
-    getReasonName () {
-      db.collection('users').doc(this.user.uid).collection(this.score).doc(this.reason).get().then((doc) => {
-        if (doc.exists) {
-          this.reasonName = doc.data().name
+    getTodayScore () {
+      let count = 0
+      let total = 0
+      for (const key in this.categories) {
+        if (this.categories[key] && this.categories[key] !== 'off') {
+          count++
+          switch (this.categories[key]) {
+            case 'good':
+              total += 2
+              break
+            case 'soso':
+              total += 1
+              break
+            default:
+              break
+          }
         }
-      })
-      return this.reasonName
+      }
+      const maxScore = count * 2
+      const totalScore = Math.round(total / maxScore * 100)
+      const graphArray = []
+      graphArray.push(totalScore)
+      graphArray.push(100 - totalScore)
+      this.chartDataValues = graphArray
+      this.todayScore = totalScore
+      console.log(this.todayScore)
+    },
+    reload () {
+      window.location.reload()
     },
     async getScoreList () {
       this.scoreList = []
@@ -215,27 +289,23 @@ export default {
     },
     async submit (user) {
       if (window.confirm(this.$t('add-form.confirm'))) {
-        if (this.detail) {
-          await db.collection('users').doc(user.uid).collection(this.score).add({
-            name: this.detail,
-            dispFlg: true
-          }).then((docRef) => {
-            console.log('Document written with ID: ', docRef.id)
-            this.reason = docRef.id
-          }).catch(function (error) {
-            console.error('Error adding document1: ', error)
-          })
-        }
-        await db.collection('daily').doc(user.uid).collection('report').doc(this.date).set({
+        const regData = {
           date: this.date,
-          score: this.score,
-          reason: this.reason
-        }).then(function (docRef) {
+          housework: this.categories.housework,
+          childcare: this.categories.childcare,
+          work: this.categories.work,
+          skillup: this.categories.skillup,
+          diet: this.categories.diet,
+          exercise: this.categories.exercise,
+          diary: this.diary
+        }
+        await db.collection(user.uid + '-daily').doc(this.date).set(regData).then(function (docRef) {
           console.log('Document written with ID: ', docRef)
         }).catch(function (error) {
           console.error('Error adding document2: ', error)
         })
-        await window.location.reload()
+        this.scoreResult = true
+        this.getTodayScore()
       }
     }
   }
@@ -352,10 +422,18 @@ export default {
         background-size: cover;
       }
     }
-    #score {
+    .score {
+      .category {
+        margin-bottom: 25px;
+      }
+      .category:last-child {
+        margin: 0;
+      }
       .form_wrap {
         display: flex;
         justify-content: space-between;
+        padding: 0 15px;
+        margin: 30px auto 0;
         label {
           display: block;
           cursor: pointer;
@@ -397,44 +475,21 @@ export default {
             font-weight: bold;
           }
         }
-      }
-    }
-    #reason {
-      .form_wrap {
-        position: relative;
-        width: 100%;
-        select {
-          width: 100%;
-          background: #fff;
-          padding: 5px 20px 5px 5px;
-          border: 1px solid #d1d1d1;
-          border-radius: 3px;
-          font: 400 11px system-ui;
-          font-size: 16px;
-          -webkit-appearance: none;
-          -ms-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
+        label.off input:checked + svg {
+          fill: #3bca26;
+          + p {
+            color: #3bca26;
+            font-weight: bold;
+          }
         }
       }
-      .form_wrap::after {
-          position: absolute;
-          content: '';
-          top: 50%;
-          right: 5px;
-          z-index: 3;
-          -webkit-transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-          border-top: 7px solid #fda085;
-          border-right: 5px solid transparent;
-          border-left: 5px solid transparent;
-          pointer-events: none;
+      .form_wrap.work_wrap {
+        padding: 0;
       }
-
     }
-    #detail {
+    #diary {
       .form_wrap {
+        padding: 0 10px;
         textarea {
           padding: 5px;
           overflow: auto;
@@ -455,7 +510,7 @@ export default {
     }
     #confirm, #docExist {
       table {
-        width: 100%;
+        width: calc(100% - 10px);
         tr {
           border-bottom: 1px solid #d1d1d1;
           th, td {
@@ -465,6 +520,64 @@ export default {
           }
           th {
             white-space: nowrap;
+            padding-right: 15px;
+          }
+          td {
+            display: flex;
+            align-items: center;
+            span {
+              display: block;
+              width: 25px;
+              svg {
+                max-width: 100%;
+                width: 100%;
+                margin: 0px 0 -5px;
+              }
+            }
+            span.good svg {
+              fill: #ff487c;
+            }
+            span.soso svg {
+              fill: #ff7334;
+            }
+            span.bad svg {
+              fill: #07c8c1;
+            }
+            span.off svg {
+              fill: #3bca26;
+            }
+          }
+        }
+      }
+    }
+    #result {
+      .label_txt {
+          margin: 0 0 15px;
+      }
+      .score_wrap {
+        position: relative;
+        width: calc(100% - 15px);
+        margin: 0 auto;
+        border-bottom: 2px solid #f8c86d;
+        .data_wrap {
+          position: absolute;
+          left: 50%;
+          bottom: 10px;
+          transform: translateX(-50%);
+          text-align: center;
+          p.date {
+            font-size: 16px;
+          }
+          p.score_data {
+            margin-top: 10px;
+            font-size: 20px;
+            .my_score {
+              font-weight: bold;
+              font-size: 45px;
+            }
+            .parsent {
+              font-size: 12px;
+            }
           }
         }
       }
@@ -530,6 +643,21 @@ export default {
     .next,
     .submit {
       margin-left: auto;
+    }
+  }
+  .close_btn_wrap {
+    max-width: 450px;
+    width: 50%;
+    margin: -5px auto 0;
+    button {
+      width: 100%;
+      background-image: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
+      text-shadow: 3px 2px 10px #fb7d82;
+      color: #fff;
+      font-size: 18px;
+      padding: 8px 0;
+      border-radius: 20px;
+      font-weight: bold;
     }
   }
   .v-enter-active {

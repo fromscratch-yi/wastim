@@ -2,18 +2,17 @@
   "explain": "Wastim(ウェイスティム)は1日の無駄時間を認識するためのアプリです。<br>無駄に感じた合計時間を1日に1回登録していただき、自分自身の時間の使い方の振り返りや、気づきによる意識改革につながることを願い作成しました。",
   "add-form": {
     "title": "スコア登録",
+    "done": "完了",
     "label-date": "評価する日付を選択してください。",
     "label-exist": "すでに登録されています。更新しますか？",
     "label-score": "の評価を選択してください。",
-    "label-reason": "評価の理由を選択してください。",
-    "label-detail": "理由を記入してください。",
+    "label-diary": "今日の一言日記を記入してください。（任意）",
+    "label-result": "1日の達成度",
     "label-confirm": "登録内容の確認",
-    "select-init": "選択してください。",
-    "other": "その他",
-    "placeholder": "50文字以内で簡潔に記述してください。",
+    "placeholder": "150文字以内で簡潔に記述してください。",
     "confirm-date": "日付",
     "confirm-score": "スコア",
-    "confirm-reason": "理由",
+    "confirm-diary": "一言日記",
     "confirm": "スコアを登録してもよろしいですか？"
   },
   "signup": {

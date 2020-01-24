@@ -43,7 +43,6 @@ export default {
       if (!window.confirm(this.$t('setting.delete-confirm'))) {
         this.loading = false
       } else {
-        await db.collection('daily').doc(user.uid).delete()
         await db.collection('users').doc(user.uid).delete().then(function () {
           console.log('Document successfully deleted')
         }).catch(function (error) {

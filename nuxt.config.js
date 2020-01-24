@@ -53,6 +53,10 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    {
+      src: '@/plugins/vue-chart.js',
+      ssr: false
+    }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -106,6 +110,9 @@ module.exports = {
     */
     extractCSS: true,
     extend (config, ctx) {
+      config.externals = {
+        moment: 'moment'
+      }
     }
   }
 }
