@@ -112,6 +112,20 @@ export default {
       })
     }
   },
+  mounted () {
+    window.addEventListener('touchstart', function (e) {
+      if (e.touches.length >= 2) { e.preventDefault() }
+    }, { passive: false })
+    /* ダブルタップによる拡大を禁止 */
+    let t = 0
+    window.addEventListener('touchend', function (e) {
+      const now = new Date().getTime()
+      if ((now - t) < 350) {
+        e.preventDefault()
+      }
+      t = now
+    }, false)
+  },
   methods: {
     ...mapActions('modules/user', [
       'login'
@@ -184,7 +198,7 @@ export default {
       top: 5%;
       right: 0;
       left: 0;
-      width: calc(85% - 40px);
+      width: calc(90% - 40px);
       padding: 30px 20px;
       margin: auto;
       background: #fff;
@@ -282,8 +296,9 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        padding: 5px 0 8px;
         label {
-          width: 40%;
+          width: calc(50% - 1rem);
           line-height: 135%;
           position: relative;
           margin: 0.5rem;
@@ -305,7 +320,6 @@ export default {
                     transition:         transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
             -webkit-transform: scale(0, 0);
                     transform: scale(0, 0);
-            border-radius: 50%;
             background: linear-gradient(120deg,#f6d365,#fda085);
             background: -webkit-linear-gradient(120deg,#f6d365,#fda085);
           }
@@ -321,7 +335,6 @@ export default {
             height: 1rem;
             content: '';
             border: 2px solid #f2f2f2;
-            border-radius: 50%;
             background: #ffffff;
           }
         }

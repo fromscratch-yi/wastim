@@ -29,7 +29,6 @@ module.exports = {
     ]
   },
   manifest: {
-    lang: 'ja',
     name: 'Wastim',
     short_name: 'Wastim',
     description: 'Record your waste time.',

@@ -13,12 +13,13 @@
               tr(v-for="(category, index) in user.targetCategories")
                 th {{ $t('signup.target-categories.' + category) }}
                 td
-                  span(:class="categories[category]")
+                  span(v-if="!categories[category]") -
+                  span(v-if="categories[category]" :class="categories[category]")
                     GoodSvg(v-if="categories[category] == 'good'")
                     SosoSvg(v-else-if="categories[category] == 'soso'")
                     BadSvg(v-else-if="categories[category] == 'bad'")
                     offSvg(v-else-if="categories[category] == 'off'")
-                  p （{{ categories[category] }}）
+                  p(v-if="categories[category]") （{{ categories[category] }}）
               tr
                 th {{ $t('add-form.confirm-diary') }}
                 td {{ diary }}
@@ -28,7 +29,9 @@
           label.form_wrap: input(type="date" :max="dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + dateObj.getDate()" v-model="date" @change="stepValidate()")
 
         div.inner.score(v-for="(category, index) in user.targetCategories" :id="category" v-if="!scoreResult && !docExist && step === index + 2" :key="'step' + (index + 2)")
-          p.label_txt {{ $t('signup.target-categories.' + category) + $t('add-form.label-score') }}
+          p.label_txt
+            span.c_name {{ $t('signup.target-categories.' + category) }}
+            | {{ $t('add-form.label-score') }}
           .form_wrap.score_wrap(:class="category + '_wrap'")
             label(v-for="scoreName in scores" :key="scoreName" v-bind:for="category + '_' +scoreName" v-bind:class="scoreName")
               input(type="radio" :name="category" :id="category + '_' +scoreName" :value="scoreName" v-model="categories[category]" @change="validAndNext()")
@@ -68,7 +71,7 @@
 
         div.inner#result(v-if="scoreResult" key="result")
           p.label_txt {{ $t('add-form.label-result') }}
-          .score_wrap
+          .score_wrap(:class="todayScoreLabel")
             doughnut-chart(:chart-data="chartData" :options="chartOptions" :styles="{height: '150px', position: 'relative'}")
             .data_wrap
               p.date {{ date.replace('-', ' / ').replace('-', ' / ') }}
@@ -117,6 +120,7 @@ export default {
       scoreList: [],
       docExist: false,
       todayScore: 0,
+      todayScoreLabel: '',
       scoreResult: false,
       categories: {
         housework: '',
@@ -139,6 +143,9 @@ export default {
         },
         legend: {
           display: false
+        },
+        tooltips: {
+          enabled: false
         }
       }
     }
@@ -159,8 +166,7 @@ export default {
             backgroundColor: this.chartColors,
             borderWidth: 0
           }
-        ],
-        labels: this.chartLabels
+        ]
       }
     }
   },
@@ -187,7 +193,6 @@ export default {
       this.stepValidate()
     },
     next () {
-      console.log(this.step)
       this.isNext = false
       this.docExist = false
       this.transName = 'next'
@@ -248,7 +253,7 @@ export default {
     getTodayScore () {
       let count = 0
       let total = 0
-      for (const key in this.categories) {
+      for (const key of this.user.targetCategories) {
         if (this.categories[key] && this.categories[key] !== 'off') {
           count++
           switch (this.categories[key]) {
@@ -269,8 +274,17 @@ export default {
       graphArray.push(totalScore)
       graphArray.push(100 - totalScore)
       this.chartDataValues = graphArray
+      if (totalScore >= 80) {
+        this.chartColors = ['#ff487c', '#d1d1d1']
+        this.todayScoreLabel = 'good'
+      } else if (totalScore > 45 && totalScore < 80) {
+        this.chartColors = ['#fab777', '#d1d1d1']
+        this.todayScoreLabel = 'soso'
+      } else {
+        this.chartColors = ['#07c8c1', '#d1d1d1']
+        this.todayScoreLabel = 'bad'
+      }
       this.todayScore = totalScore
-      console.log(this.todayScore)
     },
     reload () {
       window.location.reload()
@@ -355,6 +369,9 @@ export default {
         padding-left: 20px;
         line-height: 1.5;
         font-size: 15px;
+        .c_name {
+          font-weight: bold;
+        }
       }
       .label_txt::before {
         content: "";
@@ -579,6 +596,24 @@ export default {
               font-size: 12px;
             }
           }
+        }
+      }
+      .score_wrap.good {
+        border-bottom: 2px solid #ff487c;
+        p.score_data .my_score {
+          color: #ff487c;
+        }
+      }
+      .score_wrap.soso {
+        border-bottom: 2px solid #f8c86d;
+        p.score_data .my_score {
+          color: #f8c86d;
+        }
+      }
+      .score_wrap.bad {
+        border-bottom: 2px solid #07c8c1;
+        p.score_data .my_score {
+          color: #07c8c1;
         }
       }
     }

@@ -9,23 +9,24 @@
         p.icon: img(v-if="user.icon" :src="user.icon" :alt="user.name + ' icon'")
         p.name {{ user.name }}
       BgAnimation
-    p.wrap_txt {{ $t('account.user-info') }}
-    dl.user_info
-      dt.label: BirthdaySvg
-      dd
-        p.txt {{ $t('signup.birthday') }}
-        p {{ user.year }} / {{ ('0' + user.month).slice(-2) }} / {{ ('0' + user.day).slice(-2) }}
-    dl.user_info
-      dt.label: GenderSvg
-      dd
-        p.txt {{ $t('signup.gender') }}
-        p {{ $t('signup.' + user.gender) }}
-    dl.user_info
-      dt.label: CheckSvg
-      dd
-        p.txt {{ $t('signup.target') }}
-        p.target_list
-          span(v-for="(category, index) in user.targetCategories" :key="category") ・{{ $t('signup.target-categories.' + category) }}
+    .user_info_wrap
+      dl.user_info
+        dt.label: BirthdaySvg
+        dd
+          p.txt {{ $t('signup.birthday') }}
+          p {{ user.year }} / {{ ('0' + user.month).slice(-2) }} / {{ ('0' + user.day).slice(-2) }}
+      dl.user_info
+        dt.label: GenderSvg
+        dd
+          p.txt {{ $t('signup.gender') }}
+          p {{ $t('signup.' + user.gender) }}
+      dl.user_info
+        dt.label: CheckSvg
+        dd
+          p.txt {{ $t('signup.target') }}
+          p.target_list
+            span.target_txt(v-for="(category, index) in user.targetCategories" :key="category") {{ $t('signup.target-categories.' + category) }}
+              span 、
     button.logout(type="button" @click='doLogout') {{ $t('account.logout') }}
 
     .edit_wrap(v-if="isEdit")
@@ -193,14 +194,14 @@ export default {
   .container {
     .my_nav_wrap {
       position: relative;
-      padding: 40px 0 45px;
+      padding: 25px 0 30px;
       text-align: center;
       background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
       .edit {
         position: absolute;
         right: 15px;
         top: 15px;
-        z-index: 3;
+        z-index: 6;
         img {
           width: 25px;
           height: 25px;
@@ -233,86 +234,44 @@ export default {
         z-index: 1;
       }
     }
-    .wrap_txt {
-      margin: 30px auto 10px;
-      text-align: center;
-      font-size: 18px;
-    }
-    .user_info {
-      display: flex;
-      align-items: center;
-      max-width: 500px;
-      width: calc(90% - 30px);
-      margin: 0 auto 10px;
-      border-bottom: 1px solid #ccc;
-      padding: 5px 15px 10px;
-      .label {
-        padding: 10px;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #e4e4e4;
-        svg {
-          max-width: 100%;
-          width: 30px !important;
-          height: auto !important;
-          transition: all  0.5s ease;
-          fill: #fda085;
+    .user_info_wrap {
+      margin-top: 20px;
+      .user_info {
+        display: flex;
+        align-items: center;
+        max-width: 500px;
+        width: calc(90% - 30px);
+        margin: 10px auto 0;
+        border-bottom: 1px solid #ccc;
+        padding: 5px 15px 10px;
+        .label {
+          padding: 10px;
+          border-radius: 50%;
+          box-shadow: 0 0 10px #e4e4e4;
+          svg {
+            max-width: 100%;
+            width: 30px !important;
+            height: auto !important;
+            transition: all  0.5s ease;
+            fill: #fda085;
+          }
         }
-      }
-      dd {
-        margin-left: 25px;
-        .txt {
-          color: #999;
-          margin-bottom: 4px;
-          font-size: 14px;
+        dd {
+          margin-left: 25px;
+          .txt {
+            color: #999;
+            margin-bottom: 4px;
+            font-size: 14px;
+          }
+          .target_list .target_txt {
+            display: inline-block;
+            font-size: 14px;
+            margin: 5px 0 5px 0;
+          }
+          .target_list .target_txt:last-child span {
+            display: none;
+          }
         }
-        .target_list span {
-          display: inline-block;
-          margin: 5px 10px 5px 0;
-        }
-      }
-    }
-    .locale_wrap {
-      display: flex;
-      margin: 0 auto 40px;
-      max-width: 300px;
-      width: 60%;
-      p {
-        width: 100%;
-        text-align: center;
-        a {
-          display: block;
-          padding: 15px 5px;
-          background: #fff;
-          border: 2px solid #fda085;
-          text-decoration: none;
-          font-weight: bold;
-          color: #fff;
-        }
-        a:link, a:visited {
-          color: #fda085;
-        }
-        a.nuxt-link-exact-active {
-          background: #fda085;
-          color: #fff;
-        }
-      }
-      P:first-child a {
-        border-top-left-radius : 60px;
-        -webkit-border-top-left-radius: 60px;
-        -moz-border-radius-topleft: 60px;
-        border-bottom-left-radius : 60px;
-        -webkit-border-bottom-left-radius: 60px;
-        -moz-border-radius-bottomleft: 60px;
-        border-right: none;
-      }
-      p:last-child a {
-        border-top-right-radius : 60px;
-        -webkit-border-top-right-radius: 60px;
-        -moz-border-radius-topright: 60px;
-        border-bottom-right-radius : 60px;
-        -webkit-border-bottom-right-radius: 60px;
-        -moz-border-radius-bottomright: 60px;
-        border-left: none;
       }
     }
     .logout {
@@ -343,10 +302,10 @@ export default {
       .inner {
         max-width: 450px;
         position: absolute;
-        top: 10%;
+        top: 7%;
         right: 0;
         left: 0;
-        width: calc(85% - 40px);
+        width: calc(90% - 40px);
         padding: 60px 20px 30px;
         margin: auto;
         background: #fff;
@@ -453,8 +412,9 @@ export default {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-between;
+          padding: 5px 0 8px;
           label {
-            width: 40%;
+            width: calc(50% - 1rem);
             line-height: 135%;
             position: relative;
             margin: 0.5rem;
@@ -476,7 +436,6 @@ export default {
                       transition:         transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
               -webkit-transform: scale(0, 0);
                       transform: scale(0, 0);
-              border-radius: 50%;
               background: linear-gradient(120deg,#f6d365,#fda085);
               background: -webkit-linear-gradient(120deg,#f6d365,#fda085);
             }
@@ -492,7 +451,6 @@ export default {
               height: 1rem;
               content: '';
               border: 2px solid #f2f2f2;
-              border-radius: 50%;
               background: #ffffff;
             }
           }

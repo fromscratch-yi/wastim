@@ -1,7 +1,11 @@
 {
   "explain": "wastim can record your waste-time.",
+  "no-data": "Data is not exist",
   "add-form": {
     "title": "Score registration",
+    "yesterday": "Yesterday is not registered. Do you register?",
+    "no": "Later",
+    "yes": "Yes",
     "done": "Done",
     "label-date": "Please select a date to evaluate.",
     "label-exist": "Already been registered. Do you update?",
