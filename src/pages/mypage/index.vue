@@ -15,11 +15,18 @@
         div.add_bg
 
       ul.tab_list
-        li(@click="changeTab('total')" :class="{'active': isActive === 'total'}") 総合
-        li(@click="changeTab('taget_detail')" :class="{'active': isActive === 'taget_detail'}") 項目別
-        li(@click="changeTab('date_detail')" :class="{'active': isActive === 'date_detail'}") 詳細
+        li(@click="changeTab('total')" :class="{'active': isActive === 'total'}")
+          TotalSvg
+          span {{ $t('tab-list.total') }}
+        li(@click="changeTab('taget_detail')" :class="{'active': isActive === 'taget_detail'}")
+          ItemSvg
+          span {{ $t('tab-list.target') }}
+        li(@click="changeTab('date_detail')" :class="{'active': isActive === 'date_detail'}")
+          DailySvg
+          span {{ $t('tab-list.daily') }}
       .tab_inner_wrap
         .tab_inner#total(v-if="isActive === 'total'")
+          h1 {{ $t('total-title') }}
           .score_wrap(:class="todayScoreLabel")
             doughnut-chart.chart(:chart-data="doughnutChart" :options="doughnutOptions" :styles="{height: '150px', position: 'relative'}")
             .data_wrap
@@ -29,9 +36,24 @@
                 span.slash /
                 span  100
                 span.parsent %
+          table.total_tbl
+            tbody
+              tr(v-for="dateData in monthData")
+                td.date(v-html="dateFormat(dateData['date'])")
+                td(v-html="dayFormat(dateData['date'])")
+                td(:class="getScoreLevel(dateData['totalScore'])")
+                  div(v-if="dateData['totalScore'] || dateData['totalScore'] === 0")
+                    span.icon
+                      GoodSvg(v-if="getScoreLevel(dateData['totalScore']) == 'good'")
+                      SosoSvg(v-else-if="getScoreLevel(dateData['totalScore']) == 'soso'")
+                      BadSvg(v-else-if="getScoreLevel(dateData['totalScore']) == 'bad'")
+                    span.score {{ dateData['totalScore'] }}
+                    span.parsent %
+                  span(v-else) {{ $t('no-data') }}
         .tab_inner#taget_detail(v-if="isActive === 'taget_detail'")
           .radar_wrap
-            radar-chart.chart(:chart-data="radarChart" :options="radarOptions" :styles="{height: '250px', position: 'relative'}")
+            h1.title_margin {{ dateObj.getFullYear() + ' / ' + dateObj.getMonth() + 1 }}
+            radar-chart.chart(:chart-data="radarChart" :options="radarOptions" :styles="{height: '300px', position: 'relative'}")
             table.target_tbl
               tbody
                 tr(v-for="(category, index) in user.targetCategories")
@@ -42,13 +64,43 @@
                         GoodSvg(v-if="getScoreLevel(radarDataValues[index]) == 'good'")
                         SosoSvg(v-else-if="getScoreLevel(radarDataValues[index]) == 'soso'")
                         BadSvg(v-else-if="getScoreLevel(radarDataValues[index]) == 'bad'")
-                        offSvg(v-else-if="getScoreLevel(radarDataValues[index]) == 'off'")
                       span.score {{ radarDataValues[index] }}
                       span.parsent %
                     span(v-else) {{ $t('no-data') }}
 
         .tab_inner#date_detail(v-if="isActive === 'date_detail'")
-          line-chart.chart(:chart-data="lineChart" :options="lineOptions" :styles="{height: '250px', position: 'relative'}")
+          .line_wrap
+            h1.title_margin {{ dateObj.getFullYear() + ' / ' + dateObj.getMonth() + 1 }}
+            line-chart.chart(:chart-data="lineChart" :options="lineOptions" :styles="{height: '280px', position: 'relative'}")
+            .data_tbl_wrap
+              table.date_tbl
+                  tr
+                    th(align="center") {{ $t('date-th') }}
+                    th(align="center") {{ $t('score-th') }}
+                    th(v-for="category in user.targetCategories" align="center") {{ $t('signup.target-categories.' + category) }}
+                    th
+                  tr(v-for="date of endDateObj.getDate()")
+                    td.date(align="center" v-html="dateFormat(dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + ('00' + date).slice(-2)) + dayFormat(dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + ('00' + date).slice(-2))")
+                    td(v-if="dateDataList[date - 1].length == 0" :colspan="user.targetCategories.length + 1" align="center") {{ $t('no-data') }}
+                    td(v-if="dateDataList[date - 1].length > 0") {{ dateDataList[date - 1][0]['totalScore'] }}%
+                    td(v-if="dateDataList[date - 1].length > 0"  v-for="category in user.targetCategories" align="center")
+                      span.icon(v-if="dateDataList[date - 1][0][category] != ''" :class="dateDataList[date - 1][0][category]")
+                        GoodSvg(v-if="dateDataList[date - 1][0][category] == 'good'")
+                        SosoSvg(v-else-if="dateDataList[date - 1][0][category] == 'soso'")
+                        BadSvg(v-else-if="dateDataList[date - 1][0][category] == 'bad'")
+                        offSvg(v-else-if="dateDataList[date - 1][0][category] == 'off'")
+                      span(v-else) -
+                    td(v-if="dateDataList[date - 1].length == 0")
+                      button.register(type="button" @click="openAddForm(dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + ('00' + date).slice(-2))") {{ $t('add-form.register') }}
+                    td(v-else)
+                      button.update(type="button" @click="openAddForm(dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + ('00' + date).slice(-2))") {{ $t('add-form.update') }}
+
+        div.no_data(v-if="isRegister" v-bind:class="{ active: isRegister }")
+          .add_form
+            addForm.add_form_inner(v-bind:argDate="targetDate")
+            button.close_btn(type="button" @click="closeAddForm"): img(src="~assets/images/close_wh.png" alt="" width="25" height="25")
+          div.add_bg
+
 </template>
 
 <script>
@@ -57,6 +109,10 @@ import AddForm from '@/components/AddForm'
 import GoodSvg from '@/assets/images/good.svg?inline'
 import BadSvg from '@/assets/images/bad.svg?inline'
 import SosoSvg from '@/assets/images/soso.svg?inline'
+import OffSvg from '@/assets/images/off.svg?inline'
+import TotalSvg from '@/assets/images/by_total.svg?inline'
+import ItemSvg from '@/assets/images/by_item.svg?inline'
+import DailySvg from '@/assets/images/by_daily.svg?inline'
 import { db } from '@/plugins/firebase.js'
 
 export default {
@@ -64,14 +120,20 @@ export default {
     AddForm,
     GoodSvg,
     BadSvg,
-    SosoSvg
+    SosoSvg,
+    OffSvg,
+    TotalSvg,
+    ItemSvg,
+    DailySvg
   },
   layout: 'mypage',
   data () {
     return {
       isNoData: false,
       isFormOpen: false,
+      isRegister: false,
       dateObj: new Date(),
+      targetDate: '',
       totalScore: 0,
       monthData: [],
       targetCategories: [],
@@ -82,6 +144,7 @@ export default {
       radarDataValues: [],
       lineDataValues: [],
       lineDataList: {},
+      dateDataList: [],
       chartColors: ['#facf59', '#c1c1c1'],
       chartLabels: ['#facf59', '#c1c1c1'],
       doughnutOptions: {
@@ -104,6 +167,7 @@ export default {
         maintainAspectRatio: false,
         scale: {
           ticks: {
+            suggestedMax: 100,
             suggestedMin: 0,
             stepSize: 10
           }
@@ -124,26 +188,8 @@ export default {
         scales: {
           yAxes: [{
             ticks: {
-              suggestedMax: 2,
-              suggestedMin: 0,
-              stepSize: 1,
-              callback (value, index, values) {
-                let label = ''
-                switch (value) {
-                  case 2:
-                    label = 'Good'
-                    break
-                  case 1:
-                    label = 'SoSo'
-                    break
-                  case 0:
-                    label = 'Bad'
-                    break
-                  default:
-                    break
-                }
-                return label
-              }
+              suggestedMax: 100,
+              suggestedMin: 0
             }
           }]
         },
@@ -152,28 +198,13 @@ export default {
           easing: 'easeInOutCubic'
         },
         legend: {
-          display: true
+          display: false
         },
         tooltips: {
           callbacks: {
             label (tooltipItem, data) {
               let label = data.datasets[tooltipItem.datasetIndex].label || ''
-              if (label) {
-                label += ': '
-              }
-              switch (tooltipItem.yLabel) {
-                case 2:
-                  label += 'Good'
-                  break
-                case 1:
-                  label += 'SoSo'
-                  break
-                case 0:
-                  label += 'Bad'
-                  break
-                default:
-                  break
-              }
+              label += ': ' + tooltipItem.yLabel + '%'
               return label
             }
           }
@@ -190,6 +221,9 @@ export default {
       const yeasterday = this.dateObj
       yeasterday.setDate(yeasterday.getDate() - 1)
       return yeasterday.getFullYear() + '-' + yeasterday.getMonth() + 1 + '-' + yeasterday.getDate()
+    },
+    endDateObj () {
+      return new Date(this.dateObj.getFullYear(), this.dateObj.getMonth() + 1, 0)
     },
     doughnutChart () {
       return {
@@ -270,7 +304,6 @@ export default {
         this.monthData.push(monthData)
       })
     })
-    console.log(this.categoryScores)
     console.log(this.monthData)
     this.totalScore = Math.round(this.totalScore / this.monthData.length)
     this.doughnutData()
@@ -278,8 +311,22 @@ export default {
     this.lineData()
   },
   methods: {
+    dateFormat (dateStr) {
+      const dateObj = new Date(dateStr)
+      return (dateObj.getMonth() + 1) + '/' + dateObj.getDate()
+    },
+    dayFormat (dateStr) {
+      const dateObj = new Date(dateStr)
+      let dayStyle = ''
+      if (dateObj.getDay() === 0) {
+        dayStyle = 'style="color: rgb(255, 61, 61)"'
+      } else if (dateObj.getDay() === 6) {
+        dayStyle = 'style="color: rgb(61, 61, 255);"'
+      }
+      return '(<span ' + dayStyle + '>' + this.$t('date')[dateObj.getDay()] + '</span>)'
+    },
     getThisMonthStart () {
-      return this.dateObj.getFullYear() + '-' + this.dateObj.getMonth() + 1 + '-1'
+      return this.dateObj.getFullYear() + '-' + this.dateObj.getMonth() + 1 + '-01'
     },
     getThisMonthEnd () {
       const endDateObj = new Date(this.dateObj.getFullYear(), this.dateObj.getMonth() + 1, 0)
@@ -290,6 +337,14 @@ export default {
     },
     registerYes () {
       this.isFormOpen = true
+    },
+    openAddForm (dateStr) {
+      console.log(dateStr)
+      this.isRegister = true
+      this.targetDate = dateStr
+    },
+    closeAddForm () {
+      this.isRegister = false
     },
     changeTab (keyword) {
       this.isActive = keyword
@@ -323,22 +378,32 @@ export default {
       this.radarDataValues = dataList
     },
     lineData () {
+      const labels = []
+      const dataList = []
+      const endDateObj = new Date(this.dateObj.getFullYear(), this.dateObj.getMonth() + 1, 0)
+      const thisMonth = endDateObj.getMonth() + 1
+      for (let idx = 1; idx <= endDateObj.getDate(); idx++) {
+        labels.push(thisMonth + '/' + idx)
+        const dateData = this.monthData.filter(function (item, index) {
+          if (item.date === endDateObj.getFullYear() + '-' + ('00' + thisMonth).slice(-2) + '-' + ('00' + idx).slice(-2)) {
+            return true
+          }
+        })
+        this.dateDataList.push(dateData)
+        if (dateData.length > 0) {
+          dataList.push(dateData[0].totalScore)
+        } else {
+          dataList.push(null)
+        }
+      }
       this.lineDataList = {
-        labels: ['8/1', '8/2', '8/3', '8/4', '8/5', '8/6', '8/7'],
+        labels,
         datasets: [
           {
-            label: '育児',
-            data: [1, 2, 2, 0, 1, 0, 0, 1],
+            data: dataList,
             borderWidth: 2,
-            borderColor: 'rgba(255,0,0,1)',
-            backgroundColor: 'rgba(0,0,0,0)'
-          },
-          {
-            label: '仕事',
-            data: [2, 2, 0, 0, null, 2, 2, 1],
-            borderWidth: 2,
-            borderColor: 'rgba(0,0,255,1)',
-            backgroundColor: 'rgba(0,0,0,0)'
+            borderColor: 'rgba(246, 207, 103, 1)',
+            backgroundColor: 'rgba(246, 207, 103, 0.1)'
           }
         ]
       }
@@ -460,14 +525,58 @@ export default {
       right: 18px;
     }
   }
-
+  .tab_list {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    display: flex;
+    border-bottom: 2px solid #fbad7d;
+    z-index: 1;
+    box-shadow: 0 -2px 5px #c7c7c7;
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% / 3);
+      list-style: none;
+      text-align: center;
+      padding: 12px 5px;
+      color: #fbad7d;
+      font-size: 13px;
+      background: #fff;
+      cursor: pointer;
+      svg {
+        width: 18px;
+        height: 18px;
+        margin-right: 7px;
+        fill: #fbad7d;
+      }
+    }
+    li.active {
+      background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+      pointer-events: none;
+      color: #fff;
+      text-shadow: 0px 2px 2px #f8c96c;
+      svg {
+        fill: #fff;
+      }
+    }
+  }
   .tab_inner_wrap {
     .tab_inner {
       padding: 20px 15px;
+      h1 {
+        color: #666;
+        text-align: center;
+      }
+      h1.title_margin {
+        margin-bottom: 20px;
+      }
       .score_wrap {
         position: relative;
         width: calc(100% - 15px);
-        margin: 0 auto;
+        max-width: 600px;
+        margin: 20px auto 0;
         border-bottom: 2px solid #f8c86d;
         .data_wrap {
           position: absolute;
@@ -510,53 +619,135 @@ export default {
         }
       }
       .radar_wrap {
-        .target_tbl {
-          width: calc(100% - 15px);
-          max-width: 800px;
-          margin: 20px auto 0;
-          tr {
-            border-bottom: 1px solid #d1d1d1;
-            th, td {
-              padding: 8px 8px 3px;
-              text-align: left;
-              line-height: 1.5;
+      }
+      .total_tbl, .target_tbl, .date_tbl {
+        width: calc(100% - 15px);
+        max-width: 600px;
+        margin: 20px auto 0;
+        tr {
+          border-bottom: 1px solid #d1d1d1;
+          th, td {
+            padding: 8px 8px 3px;
+            text-align: left;
+            line-height: 1.5;
+            color: #333;
+          }
+          th {
+            white-space: nowrap;
+            padding-right: 18px;
+          }
+          td div {
+            display: flex;
+            align-items: center;
+            span.icon {
+              display: block;
+              width: 25px;
+              margin-right: 10px;
+              svg {
+                max-width: 100%;
+                width: 100%;
+                margin: 0px 0 -5px;
+              }
             }
-            th {
-              white-space: nowrap;
-              padding-right: 15px;
+            span.score {
+              font-size: 20px;
             }
-            td div {
-              display: flex;
-              align-items: center;
-              span.icon {
-                display: block;
-                width: 25px;
-                margin-right: 10px;
-                svg {
-                  max-width: 100%;
-                  width: 100%;
-                  margin: 0px 0 -5px;
+            span.parsent {
+              margin: 3px 0 0 3px;
+            }
+          }
+          td.date {
+            width: 20px;
+            padding: 8px 0 3px 10px;
+          }
+          .good svg {
+            fill: #ff487c;
+          }
+          .soso svg {
+            fill: #ff7334;
+          }
+          .bad svg {
+            fill: #07c8c1;
+          }
+          .off svg {
+            fill: #3bca26;
+          }
+        }
+      }
+      .line_wrap {
+        max-width: 600px;
+        margin: 0 auto ;
+        .data_tbl_wrap {
+          overflow: scroll;
+          width: 100%;
+          height: calc(100vh - 148px);
+          .date_tbl {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 0 auto;
+            tr {
+              th, td {
+                padding: 8px 8px 3px;
+                text-align: center;
+                background: #fff;
+              }
+              th {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                padding-bottom: 8px;
+                box-shadow: 0 2px 3px rgba(167, 167, 167, 0.4);
+              }
+              td:first-child {
+                position: -webkit-sticky;
+                position: sticky;
+                left: 0;
+                box-shadow: 2px 0 3px rgba(167, 167, 167, 0.4);
+              }
+              td {
+                white-space: nowrap;
+                span.icon {
+                  display: inline-block;
+                  width: 25px;
+                  margin-right: 10px;
+                  svg {
+                    max-width: 100%;
+                    width: 100%;
+                    margin: 0px 0 -5px;
+                  }
+                }
+                span.score {
+                  font-size: 20px;
+                }
+                span.parsent {
+                  margin: 3px 0 0 3px;
+                }
+                button {
+                  color: #fff;
+                  padding: 5px 15px;
+                  border-radius: 15px;
+                }
+                .register {
+                  background-image: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
+                  text-shadow: 3px 2px 10px #ff9a9e;
+                }
+                .update {
+                    background-image: linear-gradient(to right, #b1edfa 0%, #a9c9f9 100%);
+                    text-shadow: 3px 2px 10px #aacdf9;
                 }
               }
-              span.score {
-                font-size: 20px;
+              td.date {
+                width: 20px;
+                padding: 8px 8px 3px;
               }
-              span.parsent {
-                margin: 3px 0 0 3px;
-              }
-            }
-            td.good svg {
-              fill: #ff487c;
-            }
-            td.soso svg {
-              fill: #ff7334;
-            }
-            td.bad svg {
-              fill: #07c8c1;
             }
           }
         }
       }
+    }
+    #date_detail {
+      padding: 20px 5px;
     }
   }
   @keyframes fadeIn {
