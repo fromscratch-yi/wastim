@@ -75,7 +75,7 @@
             .data_tbl_wrap
               table.date_tbl
                   tr
-                    th(align="center") {{ $t('date-th') }}
+                    th.date_th(align="center") {{ $t('date-th') }}
                     th(align="center") {{ $t('score-th') }}
                     th(v-for="category in user.targetCategories" align="center") {{ $t('signup.target-categories.' + category) }}
                     th
@@ -304,7 +304,6 @@ export default {
         this.monthData.push(monthData)
       })
     })
-    console.log(this.monthData)
     this.totalScore = Math.round(this.totalScore / this.monthData.length)
     this.doughnutData()
     this.radarData()
@@ -339,7 +338,6 @@ export default {
       this.isFormOpen = true
     },
     openAddForm (dateStr) {
-      console.log(dateStr)
       this.isRegister = true
       this.targetDate = dateStr
     },
@@ -409,7 +407,6 @@ export default {
       }
     },
     getScoreLevel (score) {
-      console.log(score)
       let scoreLabel = ''
       if (score >= 80) {
         scoreLabel = 'good'
@@ -677,8 +674,12 @@ export default {
       .line_wrap {
         max-width: 600px;
         margin: 0 auto ;
+        .chart {
+          margin-bottom: 20px;
+        }
         .data_tbl_wrap {
-          overflow: scroll;
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
           width: 100%;
           height: calc(100vh - 148px);
           .date_tbl {
@@ -699,6 +700,11 @@ export default {
                 padding-bottom: 8px;
                 box-shadow: 0 2px 3px rgba(167, 167, 167, 0.4);
               }
+              th.date_th {
+                left: 0;
+                z-index: 5;
+                box-shadow: 2px 3px 3px rgba(167, 167, 167, 0.4);
+              }
               td:first-child {
                 position: -webkit-sticky;
                 position: sticky;
@@ -707,10 +713,10 @@ export default {
               }
               td {
                 white-space: nowrap;
+                border-right: 1px solid #ececec;
                 span.icon {
                   display: inline-block;
                   width: 25px;
-                  margin-right: 10px;
                   svg {
                     max-width: 100%;
                     width: 100%;
