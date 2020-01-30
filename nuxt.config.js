@@ -55,6 +55,10 @@ module.exports = {
     {
       src: '@/plugins/vue-chart.js',
       ssr: false
+    },
+    {
+      src: '@/plugins/scroll.js',
+      ssr: false
     }
   ],
   /*

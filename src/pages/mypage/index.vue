@@ -70,9 +70,9 @@
 
         .tab_inner#date_detail(v-if="isActive === 'date_detail'")
           .line_wrap
-            h1.title_margin {{ dateObj.getFullYear() + ' / ' + dateObj.getMonth() + 1 }}
+            h1.title_margin {{ dateObj.getFullYear() + '/' + dateObj.getMonth() + 1 }}
             line-chart.chart(:chart-data="lineChart" :options="lineOptions" :styles="{height: '280px', position: 'relative'}")
-            .data_tbl_wrap
+            .data_tbl_wrap(v-scroll="handleScroll")
               table.date_tbl
                   tr
                     th.date_th(align="center") {{ $t('date-th') }}
@@ -80,7 +80,7 @@
                     th(v-for="category in user.targetCategories" align="center") {{ $t('signup.target-categories.' + category) }}
                     th
                   tr(v-for="date of endDateObj.getDate()")
-                    td.date(align="center" v-html="dateFormat(dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + ('00' + date).slice(-2)) + dayFormat(dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + ('00' + date).slice(-2))")
+                    td.date(align="center" v-html="dateObj.getMonth() + 1 + '/' + date + ' ' + dayFormat(dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + ('00' + date).slice(-2))")
                     td(v-if="dateDataList[date - 1].length == 0" :colspan="user.targetCategories.length + 1" align="center") {{ $t('no-data') }}
                     td(v-if="dateDataList[date - 1].length > 0") {{ dateDataList[date - 1][0]['totalScore'] }}%
                     td(v-if="dateDataList[date - 1].length > 0"  v-for="category in user.targetCategories" align="center")
@@ -129,6 +129,7 @@ export default {
   layout: 'mypage',
   data () {
     return {
+      position: 0,
       isNoData: false,
       isFormOpen: false,
       isRegister: false,
@@ -310,6 +311,14 @@ export default {
     this.lineData()
   },
   methods: {
+    handleScroll: (evt, el) => {
+      const top = el.getBoundingClientRect().top
+      if (window.scrollY > top + window.pageYOffset - 45) {
+        el.classList.add('fixed')
+      } else {
+        el.classList.remove('fixed')
+      }
+    },
     dateFormat (dateStr) {
       const dateObj = new Date(dateStr)
       return (dateObj.getMonth() + 1) + '/' + dateObj.getDate()
@@ -676,19 +685,23 @@ export default {
         margin: 0 auto ;
         .chart {
           margin-bottom: 20px;
+          padding: 20px 5px 0;
+        }
+        .data_tbl_wrap.fixed {
+          overflow: auto;
+          -webkit-overflow-scrolling: auto;
+          height: calc(100vh - 124px);
         }
         .data_tbl_wrap {
-          overflow: auto;
-          -webkit-overflow-scrolling: touch;
+          overflow-x: hidden;
           width: 100%;
-          height: calc(100vh - 148px);
           .date_tbl {
             border-collapse: collapse;
             width: 100%;
             margin: 0 auto;
             tr {
               th, td {
-                padding: 8px 8px 3px;
+                padding: 8px;
                 text-align: center;
                 background: #fff;
               }
@@ -697,7 +710,6 @@ export default {
                 position: sticky;
                 top: 0;
                 z-index: 2;
-                padding-bottom: 8px;
                 box-shadow: 0 2px 3px rgba(167, 167, 167, 0.4);
               }
               th.date_th {
@@ -731,7 +743,8 @@ export default {
                 }
                 button {
                   color: #fff;
-                  padding: 5px 15px;
+                  padding: 7px 15px;
+                  min-width: 80px;
                   border-radius: 15px;
                 }
                 .register {
@@ -745,7 +758,7 @@ export default {
               }
               td.date {
                 width: 20px;
-                padding: 8px 8px 3px;
+                padding: 8px;
               }
             }
           }
@@ -753,7 +766,7 @@ export default {
       }
     }
     #date_detail {
-      padding: 20px 5px;
+      padding: 20px 0 0;
     }
   }
   @keyframes fadeIn {

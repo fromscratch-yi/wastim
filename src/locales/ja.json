@@ -54,7 +54,16 @@
     "logout": "ログアウト"
   },
   "setting": {
-    "lang": "言語設定",
+    "about": "サービスについて",
+    "term-of-service": "利用規約",
+    "privacy-policy": "プライバシーポリシー",
+    "reset": "データ初期化",
+    "delete": "データ削除",
+    "reset-btn": "リセット",
+    "reset-explain": "日別のスコア情報をすべてリセットします。※<span style=\"font-size:13px; color:red;\">この操作後のデータ復元はできません。</span>",
+    "delete-btn": "削除",
+    "delete-explain": "アカウント情報を含むすべてのデータを削除します。※<span style=\"font-size:13px; color:red;\">この操作後のデータ復元はできません。</span>",
+    "lang": "言語",
     "delete-confirm": "本当にデータを削除してよろしいですか？（※削除するとデータを復元できません。）"
   },
   "error": {

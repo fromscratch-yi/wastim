@@ -6,24 +6,24 @@
         SettingSvg
         span Setting
       ul.link_wrap
-        li: nuxt-link(:to="localePath('mypage')") サービスについて
-        li: nuxt-link(:to="localePath('mypage')") 利用規約
-        li: nuxt-link(:to="localePath('mypage-data')") プライバシーポリシー
+        li: nuxt-link(:to="localePath('mypage')") {{ $t('setting.about') }}
+        li: nuxt-link(:to="localePath('mypage')") {{ $t('setting.term-of-service') }}
+        li: nuxt-link(:to="localePath('mypage-data')") {{ $t('setting.privacy-policy') }}
       dl.lang_wrap
-        dt 言語
+        dt {{ $t('setting.lang') }}
         dd
           .btn_wrap.locale_wrap
             p: nuxt-link(:to="switchLocalePath('en')") EN
             p: nuxt-link(:to="switchLocalePath('ja')") JA
       dl.data_setting_wrap
-        dt データ初期化
+        dt {{ $t('setting.reset') }}
         dd
-          p.explain_txt 日別のスコア情報をすべてリセットします。この操作後のデータ復元はできません。
-          button.reset(type="button" @click="deleteReport(user)") Reset
-        dt データ削除
+          p.explain_txt(v-html="$t('setting.reset-explain')")
+          button.reset(type="button" @click="deleteReport(user)") {{ $t('setting.reset-btn') }}
+        dt {{ $t('setting.delete') }}
         dd
-          p.explain_txt アカウント情報を含むすべてのデータを削除します。この操作後のデータ復元はできません。
-          button.delete(type="button" @click="deleteUser(user)") Delete
+          p.explain_txt(v-html="$t('setting.delete-explain')")
+          button.delete(type="button" @click="deleteUser(user)") {{ $t('setting.delete-btn') }}
 </template>
 
 <script>
@@ -128,7 +128,7 @@ export default {
       position: sticky;
       top: 0;
       z-index: 1;
-      padding: 18px 15px;
+      padding: 15px;
       font-size: 18px;
       text-align: center;
       background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
@@ -137,6 +137,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 -2px 5px #c7c7c7;
       svg {
         fill: #fff;
         width: 18px !important;
@@ -192,16 +193,15 @@ export default {
               display: block;
               padding: 7px 15px;
               background: #fff;
-              border: 2px solid #fda085;
+              border: 1px solid #fda085;
               text-decoration: none;
-              font-weight: bold;
               color: #fff;
             }
             a:link, a:visited {
               color: #fda085;
             }
             a.nuxt-link-exact-active {
-              background: #fda085;
+              background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
               color: #fff;
             }
           }
@@ -235,6 +235,7 @@ export default {
       }
       dd {
         display: flex;
+        align-items: center;
         padding: 20px;
         background: #fff;
         font-size: 13px;
@@ -243,15 +244,20 @@ export default {
           font-size: 13px;
           margin-right: 20px;
           line-height: 1.3;
+          span {
+            font-size: 13px;
+            font-weight: normal;
+            color: red;
+          }
         }
         button {
           width: calc(30% - 20px);
+          height: 35px;
           background-image: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
           text-shadow: 3px 2px 10px #ff9a9e;
-          margin: 5px 0;
           border-radius: 15px;
           color: #fff;
-          font-size: 16px;
+          font-size: 15px;
         }
         button.reset {
           background-image: linear-gradient(to right, #b1edfa 0%, #a9c9f9 100%);

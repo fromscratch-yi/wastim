@@ -54,7 +54,16 @@
     "logout": "Logout"
   },
   "setting": {
-    "lang": "Language Setting",
+    "about": "About this service",
+    "term-of-service": "Term of service",
+    "privacy-policy": "Privacy Policy",
+    "reset": "Data reset",
+    "delete": "Data delete",
+    "reset-btn": "Reset",
+    "delete-btn": "Delete",
+    "reset-explain": "Reset all daily score information. <span style=\"font-size:13px; color:red;\">Data cannot be restored after this operation.</span>",
+    "delete-explain": "Delete all data including account information. <span style=\"font-size:13px; color:red;\">Data cannot be restored after this operation.</span>",
+    "lang": "Language",
     "delete-confirm": "Are you sure you want to permanently delete this User Data?"
   },
   "error": {
