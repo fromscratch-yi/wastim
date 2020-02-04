@@ -36,18 +36,18 @@ export const actions = {
       targetCategories: [],
       year: '',
       month: '',
-      day: ''
+      day: '',
+      lang: ''
     }
     await db.collection('users').doc(user.uid).get().then((doc) => {
       if (doc.exists) {
-        console.log('Sign In.')
         userInfo.gender = doc.data().gender
         userInfo.targetCategories = doc.data().targetCategories
         userInfo.year = doc.data().year
         userInfo.month = doc.data().month
         userInfo.day = doc.data().day
+        userInfo.lang = doc.data().lang
       } else {
-        console.log('Sign Up.')
         db.collection('users').doc(user.uid).set(userInfo)
       }
     }).catch((error) => {

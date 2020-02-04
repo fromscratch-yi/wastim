@@ -151,7 +151,8 @@ export default {
           month: this.month,
           day: this.day,
           gender: this.gender,
-          targetCategories: this.targetCategories
+          targetCategories: this.targetCategories,
+          lang: this.$i18n.locale
         })
         await window.location.reload()
       }

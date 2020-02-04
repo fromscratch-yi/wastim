@@ -88,7 +88,7 @@ module.exports = {
         ],
         defaultLocale: 'ja',
         vueI18n: {
-          fallbackLocale: 'ja'
+          fallbackLocale: 'en'
         },
         vueI18nLoader: true,
         lazy: true,

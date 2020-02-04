@@ -1,5 +1,4 @@
 {
-  "explain": "wastim can record your waste-time.",
   "no-data": "Data is not exist",
   "date": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
   "tab-list": {
@@ -10,6 +9,10 @@
   "total-title": "Total achievement of this month",
   "date-th": "Date",
   "score-th": "Score",
+  "operation-th": "Operate",
+  "search": "Search",
+  "search-attention": "Please select the year and month you want to search.",
+  "signin-attention": "By continuing, you agree to WasTim's Terms of Service, Privacy Policy",
   "add-form": {
     "title": "Score registration",
     "yesterday": "Yesterday is not registered. Do you register?",

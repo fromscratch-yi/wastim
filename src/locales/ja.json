@@ -1,5 +1,4 @@
 {
-  "explain": "Wastim(ウェイスティム)は1日の無駄時間を認識するためのアプリです。<br>無駄に感じた合計時間を1日に1回登録していただき、自分自身の時間の使い方の振り返りや、気づきによる意識改革につながることを願い作成しました。",
   "no-data": "データがありません。",
   "date": ["日", "月", "火", "水", "木", "金", "土"],
   "tab-list": {
@@ -10,6 +9,10 @@
   "total-title": "今月の総合達成度",
   "date-th": "日付",
   "score-th": "スコア",
+  "operation-th": "操作",
+  "search": "検索",
+  "search-attention": "検索したい年月を選択してください。",
+  "signin-attention": "利用を継続することで WasTim の利用規約とプライバシーポリシーに同意したものとみなされます。",
   "add-form": {
     "title": "スコア登録",
     "yesterday": "昨日のデータが登録されていません。登録しますか？",
@@ -60,9 +63,9 @@
     "reset": "データ初期化",
     "delete": "データ削除",
     "reset-btn": "リセット",
-    "reset-explain": "日別のスコア情報をすべてリセットします。※<span style=\"font-size:13px; color:red;\">この操作後のデータ復元はできません。</span>",
+    "reset-explain": "日別のスコア情報をすべてリセットします。<span style=\"font-size:13px; color:red;\">この操作後のデータ復元はできません。</span>",
     "delete-btn": "削除",
-    "delete-explain": "アカウント情報を含むすべてのデータを削除します。※<span style=\"font-size:13px; color:red;\">この操作後のデータ復元はできません。</span>",
+    "delete-explain": "アカウント情報を含むすべてのデータを削除します。<span style=\"font-size:13px; color:red;\">この操作後のデータ復元はできません。</span>",
     "lang": "言語",
     "delete-confirm": "本当にデータを削除してよろしいですか？（※削除するとデータを復元できません。）"
   },

@@ -17,7 +17,7 @@
         SettingSvg
         //- span Setting
     div.add_form_wrap(v-bind:class="{ active: isCheck }")
-      addForm.add_form(v-bind:argDate="dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + dateObj.getDate()")
+      addForm.add_form(v-bind:argDate="dateObj.getFullYear() + '-' + ('00' + (dateObj.getMonth() + 1)).slice(-2) + '-' + ('00' + dateObj.getDate()).slice(-2)")
       div.add_bg
 </template>
 

@@ -6,15 +6,15 @@
         SettingSvg
         span Setting
       ul.link_wrap
-        li: nuxt-link(:to="localePath('mypage')") {{ $t('setting.about') }}
-        li: nuxt-link(:to="localePath('mypage')") {{ $t('setting.term-of-service') }}
-        li: nuxt-link(:to="localePath('mypage-data')") {{ $t('setting.privacy-policy') }}
+        li: nuxt-link(:to="localePath('about')") {{ $t('setting.about') }}
+        li: nuxt-link(:to="localePath('term_of_service')") {{ $t('setting.term-of-service') }}
+        li: nuxt-link(:to="localePath('privacy_policy')") {{ $t('setting.privacy-policy') }}
       dl.lang_wrap
         dt {{ $t('setting.lang') }}
         dd
           .btn_wrap.locale_wrap
-            p: nuxt-link(:to="switchLocalePath('en')") EN
-            p: nuxt-link(:to="switchLocalePath('ja')") JA
+            p: nuxt-link(@click.native="changeLang('en')" :to="switchLocalePath('en')") EN
+            p: nuxt-link(@click.native="changeLang('ja')" :to="switchLocalePath('ja')") JA
       dl.data_setting_wrap
         dt {{ $t('setting.reset') }}
         dd
@@ -55,6 +55,11 @@ export default {
     ...mapActions('modules/user', [
       'logout'
     ]),
+    async changeLang (lang) {
+      await db.collection('users').doc(this.user.uid).update({
+        lang
+      })
+    },
     async deleteReport (user) {
       this.loading = true
       if (!window.confirm(this.$t('setting.delete-confirm'))) {
@@ -252,12 +257,14 @@ export default {
         }
         button {
           width: calc(30% - 20px);
+          max-width: 100px;
           height: 35px;
           background-image: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
           text-shadow: 3px 2px 10px #ff9a9e;
           border-radius: 15px;
           color: #fff;
           font-size: 15px;
+          margin-left: auto;
         }
         button.reset {
           background-image: linear-gradient(to right, #b1edfa 0%, #a9c9f9 100%);

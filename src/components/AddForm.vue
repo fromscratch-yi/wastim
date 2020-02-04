@@ -26,7 +26,7 @@
 
         div.inner#date(v-if="!scoreResult && !docExist && step === 1" key="step1")
           p.label_txt {{ $t('add-form.label-date') }}
-          label.form_wrap: input(type="date" :max="dateObj.getFullYear() + '-' + dateObj.getMonth() + 1 + '-' + dateObj.getDate()" v-model="date" @change="stepValidate()")
+          label.form_wrap: input(type="date" :max="dateObj.getFullYear() + '-' + ('00' + (dateObj.getMonth() + 1)).slice(-2) + '-' + ('00' + dateObj.getDate()).slice(-2)" v-model="date" @change="stepValidate()")
 
         div.inner.score(v-for="(category, index) in user.targetCategories" :id="category" v-if="!scoreResult && !docExist && step === index + 2" :key="'step' + (index + 2)")
           p.label_txt
