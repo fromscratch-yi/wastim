@@ -23,7 +23,7 @@
       p ユーザーは，本サービスのユーザーIDおよびパスワード（以下「ログインアカウント等」といいます。）の登録・管理等をご自身の責任において行うものとし、 ユーザの管理不十分、使用上の過誤、第三者の使用等により生じた損害について、当方は一切の責任を負わないものとします。 また、ユーザは、ログインアカウント等にかかるサービス（当方以外の運営するサービスを含み、以降同様とする。）の利用をご自身の責任において利用するものとし、 当該サービスの利用については当該サービスの運営者が規定する各規約の定めに従うものとします。 ログインアカウント等にかかるサービスを利用したことにより生じた損害、当該サービス運営者とユーザの間に生じたトラブル等について当方は一切の責任を負わないものとします。<br><br>ユーザーは，いかなる場合にも，ユーザーIDおよびパスワードを第三者に譲渡または貸与することはできません。 当方は，ユーザーIDとパスワードの組み合わせが登録情報と一致してログインされた場合には，そのユーザーIDを登録しているユーザー自身による利用とみなします。
 
       h2 第4条（プライバシーポリシー）
-      p ユーザーの個人情報その他のプライバシー情報は、 <nuxt-link :to="$t('setting.privacy-policy')">こちら</nuxt-link> に掲載されている当方のプライバシーポリシー （以下「プライバシーポリシー」といいます。）に従って適切に取り扱われるものとします。 プライバシーポリシーは、本条項において参照されることによって本利用規約と一体となります。
+      p ユーザーの個人情報その他のプライバシー情報は、 <nuxt-link :to="localePath('privacy_policy')">こちら</nuxt-link> に掲載されている当方のプライバシーポリシー （以下「プライバシーポリシー」といいます。）に従って適切に取り扱われるものとします。 プライバシーポリシーは、本条項において参照されることによって本利用規約と一体となります。
 
       h2 第5条（利用料金および支払方法）
       ol
@@ -95,18 +95,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
     ...mapGetters('modules/user', [
-      'uid',
       'user'
-    ])
-  },
-  methods: {
-    ...mapActions('modules/user', [
-      'login'
     ])
   },
   head: {
@@ -134,8 +128,8 @@ header {
     margin-top: -10px;
     a {
       display: block;
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       border: 4px solid;
       border-color: #fff #fff transparent transparent;
       -webkit-transform: rotate(-135deg);
@@ -145,7 +139,7 @@ header {
   .logo {
     text-align: center;
     img {
-      width: 140px;
+      width: 110px;
     }
   }
 }
@@ -156,7 +150,7 @@ header {
   font-size: 14px;
   line-height: 1.5;
   h1 {
-    margin: 20px 0;
+    margin: 10px 0 20px;
     text-align: center;
     font-size: 20px;
     color: #333;

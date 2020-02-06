@@ -4,6 +4,17 @@
     .mypage_wrap(v-if="user.gender && user.targetCategories && user.year && user.month && user.day")
       nuxt
       my-nav
+      .pwa_recommend(v-if="!pwa && ua")
+        .inner
+          .add_home
+            p {{ $t('add-to-home')}}
+            button.close_btn(type="button" @click="close"): img(src="~assets/images/close_wh.png" alt="" width="25" height="25")
+          .explain_wrap
+            p.explain_txt(v-html="$t('add-to-explain.' + ua)")
+            p.img_wrap(v-if="ua === 'android'")
+             img(src="~assets/images/android.png")
+            p.img_wrap(v-else-if="ua === 'ios'")
+              img(src="~assets/images/ios.png")
     .signup_wrap(v-else)
       .inner
         h1.logo: img(src="~assets/images/logo.png" alt="Wastim")
@@ -85,7 +96,9 @@ export default {
       month: '',
       day: '',
       formDone: '',
-      error: ''
+      error: '',
+      ua: '',
+      pwa: false
     }
   },
   computed: {
@@ -110,6 +123,8 @@ export default {
           this.$router.push(this.localePath('index'))
         }
       })
+    } else {
+      this.$router.push(this.localePath('index'))
     }
   },
   mounted () {
@@ -125,11 +140,23 @@ export default {
       }
       t = now
     }, false)
+    if (window.matchMedia('(display-mode: standalone)').matches === true || window.navigator.standalone === true) {
+      this.pwa = true
+    }
+    const ua = window.navigator.userAgent.toLowerCase()
+    if (ua.includes('android')) {
+      this.ua = 'android'
+    } else if (ua.includes('iphone') || ua.includes('ipad')) {
+      this.ua = 'ios'
+    }
   },
   methods: {
     ...mapActions('modules/user', [
       'login'
     ]),
+    close () {
+      this.pwa = true
+    },
     changeForm () {
       this.error = ''
       this.validate()
@@ -365,6 +392,61 @@ export default {
           text-align: center;
           color: red;
           font-size: 13px;
+        }
+      }
+    }
+  }
+  .pwa_recommend {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: -99;
+    background: rgba(51, 51, 51, 0.3);
+    animation: fadeOut 1s ease 0s 1 normal;
+    -webkit-animation: fadeOut 1s ease 0s 1 normal;
+    z-index: 20;
+    .inner {
+      max-width: 450px;
+      position: absolute;
+      top: 15%;
+      right: 0;
+      left: 0;
+      width: 90%;
+      margin: auto;
+      background: #fff;
+      box-shadow: 2px 2px 7px #676767bd;
+      border-radius: 10px;
+      .add_home {
+        position: relative;
+        padding: 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background: linear-gradient(to bottom, #f6d365, #fda085);
+        color: #fff;
+        p {
+          font-size: 20px;
+          text-align: center;
+          font-weight: bold;
+        }
+        .close_btn {
+          display: block;
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          top: 50%;
+          margin-top: -13px;
+          right: 18px;
+        }
+      }
+      .explain_wrap {
+        padding: 20px 15px;
+        .explain_txt {
+          line-height: 1.6;
+          margin-bottom: 10px;
         }
       }
     }

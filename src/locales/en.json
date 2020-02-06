@@ -1,5 +1,10 @@
 {
   "no-data": "Data is not exist",
+  "add-to-home": "Add to Home Screen",
+  "add-to-explain": {
+    "android": "<span style=\"display:block;font-weight:bold;margin-bottom:10px;\">[ For Android (Chrome) ]</span>Tap the following icon at the top of the screen to add it to your home screen.<br>Please try it for to improve the operability of the service.",
+    "ios": "<span style=\"display:block;font-weight:bold;margin-bottom:10px;\">[ For iOS (Safari) ]</span>Tap the following icon at the bottom of the screen and click <span style=\"font-weight: bold;\">\"Add to Home Screen\"</span> to add it to your home screen.<br>Please try it for to improve the operability of the service."
+  },
   "date": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
   "tab-list": {
     "total": "Total",

@@ -1,5 +1,10 @@
 {
   "no-data": "データがありません。",
+  "add-to-home": "ホームへ追加",
+  "add-to-explain": {
+    "android": "<span style=\"display:block;font-weight:bold;margin-bottom:10px;\">[ Android(Chrome)の場合 ]</span>画面上部の以下アイコンをタップすると、ホーム画面に追加されます。<br>ホーム画面に追加することによってサービスの操作性が向上しますので、ぜひお試しください。",
+    "ios": "<span style=\"display:block;font-weight:bold;margin-bottom:10px;\">[ iOS(Safari)の場合 ]</span>画面下部の以下アイコンをタップし、 <span style=\"font-weight: bold;\">「ホーム画面に追加」</span> をクリックすると、ホームに追加されます。<br>ホーム画面に追加することによってサービスの操作性が向上しますので、ぜひお試しください。"
+  },
   "date": ["日", "月", "火", "水", "木", "金", "土"],
   "tab-list": {
     "total": "総合",

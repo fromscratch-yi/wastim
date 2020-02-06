@@ -133,11 +133,11 @@ body.top {
 }
 .signin_wrap {
   position: absolute;
-  top: 45%;
+  top: 48%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   margin: auto;
-  max-width: 500px;
+  max-width: 550px;
   width: calc(93% - 40px);
   background: #fff;
   padding: 30px 20px 20px;

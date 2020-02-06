@@ -84,7 +84,7 @@
                       BadSvg(v-else-if="dateDataList[date - 1][0][category] == 'bad'")
                       offSvg(v-else-if="dateDataList[date - 1][0][category] == 'off'")
                     span(v-else) -
-                  td(v-if="dateDataList[date - 1].length == 0 && detailTab == 'diary'") {{ $t('no-data') }}
+                  td.no_data_td(v-if="dateDataList[date - 1].length == 0 && detailTab == 'diary'") {{ $t('no-data') }}
                   td.diary_td(v-if="dateDataList[date - 1].length > 0 && detailTab == 'diary'") {{ dateDataList[date - 1][0]['diary'] }}
                   td.btn_td(v-if="dateDataList[date - 1].length == 0")
                     button.register(type="button" @click="openAddForm(dateObj.getFullYear() + '-' + ('00' + (dateObj.getMonth() + 1)).slice(-2) + '-' + ('00' + date).slice(-2))" :class="detailTab") {{ $t('add-form.register') }}

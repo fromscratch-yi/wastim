@@ -84,18 +84,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   computed: {
     ...mapGetters('modules/user', [
-      'uid',
       'user'
-    ])
-  },
-  methods: {
-    ...mapActions('modules/user', [
-      'login'
     ])
   },
   head: {
@@ -123,8 +117,8 @@ header {
     margin-top: -10px;
     a {
       display: block;
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       border: 4px solid;
       border-color: #fff #fff transparent transparent;
       -webkit-transform: rotate(-135deg);
@@ -134,7 +128,7 @@ header {
   .logo {
     text-align: center;
     img {
-      width: 140px;
+      width: 110px;
     }
   }
 }
@@ -145,7 +139,7 @@ header {
   font-size: 14px;
   line-height: 1.5;
   h1 {
-    margin: 20px 0;
+    margin: 10px 0 20px;
     text-align: center;
     font-size: 20px;
     color: #333;

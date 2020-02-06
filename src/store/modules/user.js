@@ -37,7 +37,8 @@ export const actions = {
       year: '',
       month: '',
       day: '',
-      lang: ''
+      lang: '',
+      pwa: false
     }
     await db.collection('users').doc(user.uid).get().then((doc) => {
       if (doc.exists) {

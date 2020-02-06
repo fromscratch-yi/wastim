@@ -59,6 +59,10 @@ module.exports = {
     {
       src: '@/plugins/scroll.js',
       ssr: false
+    },
+    {
+      src: '@/plugins/swiper.js',
+      ssr: false
     }
   ],
   /*
