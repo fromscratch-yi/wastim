@@ -203,11 +203,11 @@ export default {
   head () {
     return {
       meta: [
-        { hid: 'description', name: 'description', content: this.$t('mypage-description') },
         { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
       ]
     }
   }
+
 }
 </script>
 

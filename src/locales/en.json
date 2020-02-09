@@ -1,10 +1,18 @@
 {
+  "top-description": "First, sign in and sign up for WasTim. Also supports login with Google account and facebook account. If you do not have an account, you can create an account for free and easily.",
+  "about-description": "WasTim is a self-development app that easily records daily achievements and supports awareness change. By evaluating each item on a three-point scale and quantifying the daily evaluation score, you can re-recognize your self-evaluation and lead to a change in awareness by realizing it. Please try WasTim.",
+  "privacy-description": "Information on WasTim's Privacy Policy.",
+  "term-description": "Information on WasTim's Terms of Service.",
   "mypage-description": "This is WasTim's my page. You can manage your data.",
   "title": {
-    "mypage-top": "TOP | WasTim - MyPage -",
-    "mypage-data": "DATA | WasTim - MyPage -",
-    "mypage-account": "ACCOUNT | WasTim - MyPage -",
-    "mypage-setting": "SETTING | WasTim - MyPage -"
+    "top": "Sign In / Sign Up | WasTim",
+    "about": "About WasTim | WasTim",
+    "privacy": "Privacy Policy | WasTim",
+    "term": "Term Of Service | WasTim",
+    "mypage-top": "Top | WasTim - MyPage -",
+    "mypage-data": "Data Analyze | WasTim - MyPage -",
+    "mypage-account": "Account | WasTim - MyPage -",
+    "mypage-setting": "Setting | WasTim - MyPage -"
   },
   "no-data": "Data is not exist",
   "add-to-home": "Add to Home Screen",

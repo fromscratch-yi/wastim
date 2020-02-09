@@ -13,7 +13,10 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width,initial-scale=1.0,minimum-scale=1.0' },
       { name: 'format-detection', content: 'telephone=no, email=no, address=no' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
-      { name: 'theme-color', content: '#fda085' }
+      { name: 'theme-color', content: '#fda085' },
+      { hid: 'twitter:card', property: 'twitter:card', content: 'summary_large_image' },
+      { hid: 'twitter:site', property: 'twitter:site', content: '@IshiyamaYuichi' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'WasTim' }
     ],
     link: [
       { href: '/splashscreens/iphone5_splash.png', media: '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)', rel: 'apple-touch-startup-image' },
@@ -26,7 +29,17 @@ module.exports = {
       { href: '/splashscreens/ipadpro1_splash.png', media: '(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)', rel: 'apple-touch-startup-image' },
       { href: '/splashscreens/ipadpro3_splash.png', media: '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)', rel: 'apple-touch-startup-image' },
       { href: '/splashscreens/ipadpro2_splash.png', media: '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)', rel: 'apple-touch-startup-image' }
-    ]
+    ],
+    script: [{
+      innerHTML: `{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "url": "https://wastim-yufroms.web.app/",
+        "logo": "https://wastim-yufroms.web.app/icon.png",
+        "name": "WasTim"
+      }`,
+      type: 'application/ld+json'
+    }]
   },
   manifest: {
     name: 'WasTim',
@@ -79,6 +92,10 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    ['@nuxtjs/google-tag-manager', {
+      id: 'GTM-N7SXPT2',
+      pageTracking: true
+    }],
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     '@nuxtjs/svg',

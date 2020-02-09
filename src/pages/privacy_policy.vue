@@ -15,17 +15,27 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Meta from '~/assets/mixins/meta'
 
 export default {
+  mixins: [Meta],
+  data () {
+    return {
+      meta: {
+        title: this.$t('title.privacy'),
+        description: this.$t('privacy-description'),
+        type: 'article',
+        url: this.$route.fullPath,
+        image: 'ogp' + this.$i18n.locale + '.gif',
+        lang: this.$i18n.locale,
+        bodyClass: 'privacy_policy'
+      }
+    }
+  },
   computed: {
     ...mapGetters('modules/user', [
       'user'
     ])
-  },
-  head: {
-    bodyAttrs: {
-      class: 'privacy_policy'
-    }
   }
 }
 </script>
@@ -67,7 +77,7 @@ header {
   margin: 0 auto;
   padding: 20px 15px;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.7;
   h1 {
     margin: 10px 0 20px;
     text-align: center;

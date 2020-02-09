@@ -12,14 +12,25 @@
 <script>
 import { mapGetters } from 'vuex'
 import MonthData from '@/components/MonthData'
+import Meta from '~/assets/mixins/meta'
 
 export default {
   components: {
     MonthData
   },
   layout: 'mypage',
+  mixins: [Meta],
   data () {
     return {
+      meta: {
+        title: this.$t('title.mypage-data'),
+        description: this.$t('mypage-description'),
+        type: 'article',
+        url: this.$route.fullPath,
+        image: 'ogp' + this.$i18n.locale + '.gif',
+        lang: this.$i18n.locale,
+        bodyClass: 'data_search'
+      },
       month: '',
       queryMonth: '',
       dateObj: ''
@@ -41,14 +52,6 @@ export default {
     if (this.queryMonth) {
       this.month = this.queryMonth
       this.dateObj = new Date(this.queryMonth + '-01')
-    }
-  },
-  head () {
-    return {
-      title: this.$t('title.mypage-data'),
-      bodyAttrs: {
-        class: 'data_search'
-      }
     }
   }
 }

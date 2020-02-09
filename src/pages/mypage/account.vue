@@ -84,6 +84,7 @@ import BirthdaySvg from '@/assets/images/birthday.svg?inline'
 import GenderSvg from '@/assets/images/gender.svg?inline'
 import CheckSvg from '@/assets/images/check_list.svg?inline'
 import { db } from '@/plugins/firebase.js'
+import Meta from '~/assets/mixins/meta'
 
 export default {
   components: {
@@ -101,8 +102,18 @@ export default {
     }
   },
   layout: 'mypage',
+  mixins: [Meta],
   data () {
     return {
+      meta: {
+        title: this.$t('title.mypage-account'),
+        description: this.$t('mypage-description'),
+        type: 'article',
+        url: this.$route.fullPath,
+        image: 'ogp' + this.$i18n.locale + '.gif',
+        lang: this.$i18n.locale,
+        bodyClass: 'my_account'
+      },
       loading: false,
       isEdit: false,
       gender: '',
@@ -177,14 +188,6 @@ export default {
         this.error = ''
       } else {
         this.error = 'invalid-gender'
-      }
-    }
-  },
-  head () {
-    return {
-      title: this.$t('title.mypage-account'),
-      bodyAttrs: {
-        class: 'my_account'
       }
     }
   }

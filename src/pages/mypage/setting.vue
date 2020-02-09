@@ -32,6 +32,7 @@ import Loading from '@/components/Loading'
 import SettingSvg from '@/assets/images/setting.svg?inline'
 import firebase from '@/plugins/firebase'
 import { db } from '@/plugins/firebase.js'
+import Meta from '~/assets/mixins/meta'
 
 export default {
   components: {
@@ -39,8 +40,18 @@ export default {
     SettingSvg
   },
   layout: 'mypage',
+  mixins: [Meta],
   data () {
     return {
+      meta: {
+        title: this.$t('title.mypage-setting'),
+        description: this.$t('mypage-description'),
+        type: 'article',
+        url: this.$route.fullPath,
+        image: 'ogp' + this.$i18n.locale + '.gif',
+        lang: this.$i18n.locale,
+        bodyClass: 'setting_body'
+      },
       loading: false,
       allusers: []
     }
@@ -106,14 +117,6 @@ export default {
         })
         await this.logout()
         await this.$router.push(this.localePath('index'))
-      }
-    }
-  },
-  head () {
-    return {
-      title: this.$t('title.mypage-setting'),
-      bodyAttrs: {
-        class: 'setting_body'
       }
     }
   }

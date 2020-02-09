@@ -96,6 +96,8 @@ import AnalyzeSvg from '@/assets/images/analyze.svg?inline'
 import GrowUpSvg from '@/assets/images/growup.svg?inline'
 import CanSvg from '@/assets/images/can_icon.svg?inline'
 import HowSvg from '@/assets/images/how_icon.svg?inline'
+import Meta from '~/assets/mixins/meta'
+
 export default {
   components: {
     BgAnimation,
@@ -106,8 +108,17 @@ export default {
     CanSvg,
     HowSvg
   },
+  mixins: [Meta],
   data () {
     return {
+      meta: {
+        title: this.$t('title.about'),
+        description: this.$t('about-description'),
+        type: 'article',
+        url: this.$route.fullPath,
+        image: 'ogp' + this.$i18n.locale + '.gif',
+        lang: this.$i18n.locale
+      },
       swiperOption: {
         pagination: {
           el: '.swiper-pagination',
@@ -124,11 +135,6 @@ export default {
     ...mapGetters('modules/user', [
       'user'
     ])
-  },
-  head () {
-    return {
-      title: this.$t('title.about')
-    }
   }
 }
 </script>

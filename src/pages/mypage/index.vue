@@ -28,6 +28,7 @@ import TotalSvg from '@/assets/images/by_total.svg?inline'
 import ItemSvg from '@/assets/images/by_item.svg?inline'
 import DailySvg from '@/assets/images/by_daily.svg?inline'
 import { db } from '@/plugins/firebase.js'
+import Meta from '~/assets/mixins/meta'
 
 export default {
   components: {
@@ -42,8 +43,17 @@ export default {
     DailySvg
   },
   layout: 'mypage',
+  mixins: [Meta],
   data () {
     return {
+      meta: {
+        title: this.$t('title.mypage-top'),
+        description: this.$t('mypage-description'),
+        type: 'article',
+        url: this.$route.fullPath,
+        image: 'ogp' + this.$i18n.locale + '.gif',
+        lang: this.$i18n.locale
+      },
       isNoData: false,
       isFormOpen: false,
       dateObj: new Date()
@@ -77,11 +87,6 @@ export default {
     },
     registerYes () {
       this.isFormOpen = true
-    }
-  },
-  head () {
-    return {
-      title: this.$t('title.mypage-top')
     }
   }
 }

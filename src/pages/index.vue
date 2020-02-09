@@ -36,14 +36,25 @@ import { mapActions, mapGetters } from 'vuex'
 import Loading from '@/components/Loading.vue'
 import BgAnimation from '@/components/BgAnimation'
 import firebase, { googleProvider, facebookProvider } from '@/plugins/firebase'
+import Meta from '~/assets/mixins/meta'
 
 export default {
   components: {
     Loading,
     BgAnimation
   },
+  mixins: [Meta],
   data () {
     return {
+      meta: {
+        title: this.$t('title.top'),
+        description: this.$t('top-description'),
+        type: 'article',
+        url: this.$route.fullPath,
+        image: 'ogp' + this.$i18n.locale + '.gif',
+        lang: this.$i18n.locale,
+        bodyClass: 'top'
+      },
       error: null,
       loading: true
     }
@@ -100,9 +111,15 @@ export default {
       this.singIn(facebookProvider)
     }
   },
-  head: {
-    bodyAttrs: {
-      class: 'top'
+  head () {
+    return {
+      title: this.$t('title.top'),
+      meta: [
+        { hid: 'description', name: 'description', content: this.$t('top-description') }
+      ],
+      bodyAttrs: {
+        class: 'top'
+      }
     }
   }
 }
