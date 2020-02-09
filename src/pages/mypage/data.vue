@@ -43,9 +43,12 @@ export default {
       this.dateObj = new Date(this.queryMonth + '-01')
     }
   },
-  head: {
-    bodyAttrs: {
-      class: 'data_search'
+  head () {
+    return {
+      title: this.$t('title.mypage-data'),
+      bodyAttrs: {
+        class: 'data_search'
+      }
     }
   }
 }

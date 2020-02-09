@@ -78,6 +78,11 @@ export default {
     registerYes () {
       this.isFormOpen = true
     }
+  },
+  head () {
+    return {
+      title: this.$t('title.mypage-top')
+    }
   }
 }
 </script>

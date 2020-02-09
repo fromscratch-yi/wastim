@@ -29,8 +29,8 @@ module.exports = {
     ]
   },
   manifest: {
-    name: 'Wastim',
-    short_name: 'Wastim',
+    name: 'WasTim',
+    short_name: 'WasTim',
     description: 'Record your waste time.',
     background_color: '#ffffff',
     theme_color: '#fda085',

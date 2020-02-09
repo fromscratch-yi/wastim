@@ -1,6 +1,6 @@
 <template lang="pug">
   header.my_header
-    p.logo: img(src="~assets/images/logo.png" alt="Wastim")
+    p.logo: img(src="~assets/images/logo.png" alt="WasTim")
 </template>
 
 <script>

@@ -1,8 +1,15 @@
 {
+  "mypage-description": "This is WasTim's my page. You can manage your data.",
+  "title": {
+    "mypage-top": "TOP | WasTim - MyPage -",
+    "mypage-data": "DATA | WasTim - MyPage -",
+    "mypage-account": "ACCOUNT | WasTim - MyPage -",
+    "mypage-setting": "SETTING | WasTim - MyPage -"
+  },
   "no-data": "Data is not exist",
   "add-to-home": "Add to Home Screen",
   "add-to-explain": {
-    "android": "<span style=\"display:block;font-weight:bold;margin-bottom:10px;\">[ For Android (Chrome) ]</span>Tap the following icon at the top of the screen to add it to your home screen.<br>Please try it for to improve the operability of the service.",
+    "android": "<span style=\"display:block;font-weight:bold;margin-bottom:10px;\">[ For Android (Chrome) ]</span>Tap the following icon at the top of the screen  and click <span style=\"font-weight: bold;\">\"Add to Home Screen\"</span> to add it to your home screen.<br>Please try it for to improve the operability of the service.",
     "ios": "<span style=\"display:block;font-weight:bold;margin-bottom:10px;\">[ For iOS (Safari) ]</span>Tap the following icon at the bottom of the screen and click <span style=\"font-weight: bold;\">\"Add to Home Screen\"</span> to add it to your home screen.<br>Please try it for to improve the operability of the service."
   },
   "date": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -37,6 +44,37 @@
     "confirm": "Are you sure you want to register your score?",
     "register": "Register",
     "update": "Update"
+  },
+  "about": {
+    "catch-txt": "Easy record of daily achievement. <br> A self-development app that supports awareness change.",
+    "getting-start": "Start App",
+    "can-head": "What \"WasTim\" can do",
+    "evaluation-ttl": "3-STEP rating",
+    "evaluation-explain": "You can easily evaluate the degree of achievement on a daily basis in three stages for the target items that suit you.",
+    "feedback-ttl": "Feedback",
+    "feedback-explain": "You can optionally enter a diary of the word of the day, and use it as a review or memo of the day.",
+    "analyze-ttl": "Analyze achievement",
+    "analyze-explain": "You can analyze variety way like a past, by day, by target, and by month.",
+    "growup-ttl": "Awareness reform",
+    "growup-explain": "\"WasTim\" can supports Awareness reform by that do visualize achievement.",
+    "how-head": "How to use \"WasTim\"",
+    "step1-title": "Easy registration &amp; login with Google Account, or Facebook Account",
+    "step2-title": "Register account information and evaluation items that suit you.",
+    "step3-title": "Easy access and operability improved by adding to the home.",
+    "step4-title": "Because of the simple evaluation, you can register without hesitation about the achievement level of the day.",
+    "step5-title": "Visualize achievement, Awareness reform",
+    "step6-title": "Monthly comprehensive evaluation and item-by-day and daily analysis.",
+    "step7-title": "Start the app with easy & free registration!"
+  },
+  "privacy-policy": {
+    "inner": "<p class=\"first\">WasTim (\"us\", \"we\", or \"our\") operates https://wastim-yufroms.web.app (the \"Site\"). This page informs you of our policies regarding the collection, use and disclosure of Personal Information we receive from users of the Site.<br><br>We use your Personal Information only for providing and improving the Site. By using the Site, you agree to the collection and use of information in accordance with this policy.</p><h2>Information Collection And Use</h2><p>While using our Site, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. Personally identifiable information may include, but is not limited to your name (\"Personal Information\").<p><h2>Log Data</h2><p>Like many site operators, we collect information that your browser sends whenever you visit our Site (\"Log Data\").<br><br>This Log Data may include information such as your computer's Internet Protocol (\"IP\") address, browser type, browser version, the pages of our Site that you visit, the time and date of your visit, the time spent on those pages and other statistics.<br><br>In addition, we may use third party services such as Google Analytics that collect, monitor and analyze this …<p><h2>Communications</h2><p>We may use your Personal Information to contact you with newsletters, marketing or promotional materials and other information that ...<p><h2>Cookies</h2><p>Cookies are files with small amount of data, which may include an anonymous unique identifier. Cookies are sent to your browser from a web site and stored on your computer's hard drive.<br><br>Like many sites, we use \"cookies\" to collect information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Site.<p><h2>Security</h2><p>The security of your Personal Information is important to us, but remember that no method of transmission over the Internet, or method of electronic storage, is 100% secure. While we strive to use commercially acceptable means to protect your Personal Information, we cannot guarantee its absolute security.</p><h2>Changes To This Privacy Policy</h2><p>This Privacy Policy is effective as of Feb 6, 2020 and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page.<br><br>We reserve the right to update or change our Privacy Policy at any time and you should check this Privacy Policy periodically. Your continued use of the Service after we post any modifications to the Privacy Policy on this page will constitute your acknowledgment of the modifications and your consent to abide and be bound by the modified Privacy Policy.<br><br>If we make any material changes to this Privacy Policy, we will notify you either through the email address you have provided us, or by placing a prominent notice on our website.</p><h2>Contact Us</h2><p>If you have any questions about this Privacy Policy, please <a href=\"mailto:yufroms@gmail.com?subject=Contact-to-WasTim\">contact us</a>.</p>",
+    "end": "Thank you.",
+    "update-date": "(Updated Feb 6, 2020)"
+  },
+  "term-of-service": {
+    "inner": "<p class=\"first\">Please read these Terms of Service (\"Terms\", \"Terms of Service\") carefully before using the https://wastim-yufroms.web.app website and the WasTim mobile application (the \"Service\") operated by WasTim (\"us\", \"we\", or \"our\").<br><br>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.<br><br>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.</p><h2>Termination</h2><p>We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.<br><br>All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.</p><h2>Subscriptions</h2><p>Some parts of the Service are billed on a subscription basis (\"Subscription(s)\"). You will be billed in advance on a recurring ...</p><h2>Content</h2><p>Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material (\"Content\"). You are responsible for the …</p><h2>Links To Other Web Sites</h2><p>Our Service may contain links to third-party web sites or services that are not owned or controlled by WasTim.<br><br>WasTim has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that WasTim shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p><h2>Changes</h2><p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p><h2>Contact Us</h2><p>If you have any questions about these Terms, please <a href=\"mailto:yufroms@gmail.com?subject=Contact-to-WasTim\">contact us</a>.</p>",
+    "end": "Thank you.",
+    "update-date": "(Updated Feb 6, 2020)"
   },
   "signup": {
     "txt": "Sign Up",

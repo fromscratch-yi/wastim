@@ -180,9 +180,12 @@ export default {
       }
     }
   },
-  head: {
-    bodyAttrs: {
-      class: 'my_account'
+  head () {
+    return {
+      title: this.$t('title.mypage-account'),
+      bodyAttrs: {
+        class: 'my_account'
+      }
     }
   }
 }

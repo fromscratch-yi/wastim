@@ -109,9 +109,12 @@ export default {
       }
     }
   },
-  head: {
-    bodyAttrs: {
-      class: 'setting_body'
+  head () {
+    return {
+      title: this.$t('title.mypage-setting'),
+      bodyAttrs: {
+        class: 'setting_body'
+      }
     }
   }
 }

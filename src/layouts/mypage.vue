@@ -17,7 +17,7 @@
               img(src="~assets/images/ios.png")
     .signup_wrap(v-else)
       .inner
-        h1.logo: img(src="~assets/images/logo.png" alt="Wastim")
+        h1.logo: img(src="~assets/images/logo.png" alt="WasTim")
         p.signup_txt 〜{{ $t('signup.txt') }}〜
         //- p.label {{ $t('signup.name') }}
         //- .form_wrap.name
@@ -198,6 +198,14 @@ export default {
       } else {
         this.error = 'invalid-gender'
       }
+    }
+  },
+  head () {
+    return {
+      meta: [
+        { hid: 'description', name: 'description', content: this.$t('mypage-description') },
+        { hid: 'robots', name: 'robots', content: 'noindex, nofollow' }
+      ]
     }
   }
 }

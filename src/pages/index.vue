@@ -4,7 +4,7 @@
     .inner
       .signin_wrap
         .logo_wrap
-          p.logo: img(src="~assets/images/logo.png" alt="Wastim")
+          p.logo: img(src="~assets/images/logo.png" alt="WasTim")
           div.locale_wrap
             p: nuxt-link(:to="switchLocalePath('en')") EN
             p: nuxt-link(:to="switchLocalePath('ja')") JA

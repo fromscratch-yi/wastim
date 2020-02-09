@@ -2,86 +2,89 @@
   .container
     header
       p.logo
-        nuxt-link(:to="localePath('index')"): img(src="~assets/images/logo.png" alt="WasTim" width="100")
+        nuxt-link.back_link(v-if="user" :to="localePath('mypage-setting')")
+        nuxt-link(v-else :to="localePath('index')"): img(src="~assets/images/logo.png" alt="WasTim" width="100")
       div.locale_wrap
         p: nuxt-link(:to="switchLocalePath('en')") EN
         p: nuxt-link(:to="switchLocalePath('ja')") JA
     .mv_wrap
-      h1: img(src="~assets/images/logo-wh.png" alt="Wastim" width="140")
-      p 日々の達成度を簡単記録。<br>意識改革をサポートする自己啓発アプリ。
+      h1: img(src="~assets/images/logo-wh.png" alt="WasTim" width="140")
+      p(v-html="$t('about.catch-txt')")
+      nuxt-link(v-if="!user" :to="localePath('index')" v-html="$t('about.getting-start')")
       BgAnimation
     h2
       CanSvg
-      span WasTimにできること
+      span(v-html="$t('about.can-head')")
     ul.can_list
       li
-        h3 3段階評価
+        h3(v-html="$t('about.evaluation-ttl')")
         p.icon_wrap: EvaluationSvg
-        p 自分にあった対象項目に対し、日々の達成度を「Good」「SoSo」「Bad」の3段階で簡単に評価できます。
+        p(v-html="$t('about.evaluation-explain')")
       li
-        h3 フィードバック
+        h3(v-html="$t('about.feedback-ttl')")
         p.icon_wrap: FeadbackSvg
-        p 任意でその日の一言日記を入力でき、一日の振り返りや、メモとして活用可能です。
+        p(v-html="$t('about.feedback-explain')")
       li
-        h3 達成度を分析
+        h3(v-html="$t('about.analyze-ttl')")
         p.icon_wrap: AnalyzeSvg
-        p 今月の現時点での達成度分析から、過去、日別、月別、項目別など様々な分析が可能です。
+        p(v-html="$t('about.analyze-explain')")
       li
-        h3 意識改革
+        h3(v-html="$t('about.growup-ttl')")
         p.icon_wrap: GrowUpSvg
-        p その日の登録後の達成度や、現在時点の平均達成度、また項目別の達成度の見える化による気づき・意識改革のきっかけ作りになります。
+        p(v-html="$t('about.growup-explain')")
     h2
       HowSvg
-      span WasTimの使い方
+      span(v-html="$t('about.how-head')")
     .tutorial
       client-only
         swiper(:options="swiperOption")
           swiper-slide
             .slide_inner_wrap
-              p.slide_txt: span まず、Googleアカウント、<br>またはFacebookアカウントで<br>簡単登録＆ログイン。
+              p.slide_txt: span(v-html="$t('about.step1-title')")
               p.img_wrap
                 img(v-if="$i18n.locale == 'ja'" src="~assets/images/step1_ja.png" alt="")
                 img(v-else src="~assets/images/step1_en.png" alt="")
           swiper-slide
             .slide_inner_wrap
-              p.slide_txt: span アカウント情報と、<br>自分に合った評価項目を登録。
+              p.slide_txt: span(v-html="$t('about.step2-title')")
               p.img_wrap
                 img(v-if="$i18n.locale == 'ja'" src="~assets/images/step2_ja.png" alt="")
                 img(v-else src="~assets/images/step2_en.png" alt="")
           swiper-slide
             .slide_inner_wrap
-              p.slide_txt: span ホームに追加することで、<br>簡単アクセス・操作性UP。
+              p.slide_txt: span(v-html="$t('about.step3-title')")
               p.img_wrap
                 img(v-if="$i18n.locale == 'ja'" src="~assets/images/step3_ja.png" alt="")
                 img(v-else src="~assets/images/step3_en.png" alt="")
           swiper-slide
             .slide_inner_wrap
-              p.slide_txt: span シンプルな評価で、<br>その日の達成度を迷わず登録。
+              p.slide_txt: span(v-html="$t('about.step4-title')")
               p.img_wrap
                 img(v-if="$i18n.locale == 'ja'" src="~assets/images/step4_ja.png" alt="")
                 img(v-else src="~assets/images/step4_en.png" alt="")
           swiper-slide
             .slide_inner_wrap
-              p.slide_txt: span １日の達成度を数値化し、<br>意識改革。
+              p.slide_txt: span(v-html="$t('about.step5-title')")
               p.img_wrap
                 img(v-if="$i18n.locale == 'ja'" src="~assets/images/step5_ja.png" alt="")
                 img(v-else src="~assets/images/step5_en.png" alt="")
           swiper-slide
             .slide_inner_wrap
-              p.slide_txt: span 月ごとの総合評価と、<br>項目別・日別分析。
+              p.slide_txt: span(v-html="$t('about.step6-title')")
               p.img_wrap
                 img(v-if="$i18n.locale == 'ja'" src="~assets/images/step6_ja.png" alt="")
                 img(v-else src="~assets/images/step6_en.png" alt="")
           swiper-slide(v-if="!user")
             .slide_inner_wrap
-              p.slide_txt: span 簡単＆無料登録でアプリ開始!
+              p.slide_txt: span(v-html="$t('about.step7-title')")
               p.img_wrap.last
-                nuxt-link(:to="localePath('index')") ログイン画面へ
+                nuxt-link(:to="localePath('index')" v-html="$t('about.getting-start')")
                 img(v-if="$i18n.locale == 'ja'" src="~assets/images/step7_ja.png" alt="")
                 img(v-else src="~assets/images/step7_en.png" alt="")
           .swiper-pagination(slot="pagination")
           .swiper-button-prev(slot="button-prev")
           .swiper-button-next(slot="button-next")
+        BgAnimation
 </template>
 
 <script>
@@ -121,10 +124,15 @@ export default {
     ...mapGetters('modules/user', [
       'user'
     ])
+  },
+  head () {
+    return {
+      title: this.$t('title.about')
+    }
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 $pc: 1024px; // PC
 $tab: 767px; // タブレット
 $sp: 480px;  // スマホ
@@ -158,6 +166,15 @@ header {
   .logo {
     max-width: 50%;
     width: 100px;
+    a.back_link {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border: 4px solid;
+      border-color: #fca780 #fca780 transparent transparent;
+      -webkit-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
   }
   .locale_wrap {
     display: flex;
@@ -207,8 +224,6 @@ header {
 .mv_wrap {
   position: relative;
   padding: 70px 20px 65px;
-  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-  z-index: -1;
   margin-bottom: 20px;
   h1 {
     max-width: 335px;
@@ -231,6 +246,24 @@ header {
     line-height: 1.5;
     font-size: 16px;
   }
+  ul {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  }
+  a {
+    display: block;
+    text-decoration: none;
+    width: 60%;
+    margin: 20px auto 0;
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 60px;
+    background: linear-gradient(120deg, #fcac7e, #f8c56e);
+    text-shadow: 3px 2px 10px #ccc7b9;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-weight: bold;
+  }
 }
 h2 {
   display: flex;
@@ -238,11 +271,11 @@ h2 {
   justify-content: center;
   vertical-align: center;
   max-width: 600px;
-  width: calc(90% - 30px);
+  width: calc(90% - 24px);
   margin: 0 auto;
   font-weight: 400;
   text-align: center;
-  padding: 20px 15px 10px;
+  padding: 20px 10px 10px;
   border-bottom: 2px dashed #ffc551;
   svg {
     width: 30px;
@@ -296,6 +329,8 @@ h2 {
     }
   }
 }
+</style>
+<style lang="scss">
 .tutorial {
   margin-top: 20px;
   position: relative;
@@ -321,8 +356,6 @@ h2 {
         font-size: 16px;
         line-height: 1.5;
         font-weight: bold;
-        // background-color: rgb(248, 248, 248);
-        background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
         display: flex;
         .slide_inner_wrap {
           position: relative;
@@ -371,6 +404,7 @@ h2 {
               text-shadow: 3px 2px 10px #f18348;
               box-shadow: 0px 5px 15px rgba(154, 133, 108, 0.45);
               color: #fff;
+              font-weight: bold;
             }
           }
           .img_wrap.last {
@@ -439,6 +473,9 @@ h2 {
         transform-origin: left top
       }
     }
+  }
+  ul {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   }
 }
 </style>
