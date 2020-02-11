@@ -104,8 +104,8 @@ module.exports = {
       {
         strategy: 'prefix_and_default',
         locales: [
-          { code: 'ja', iso: 'ja_JP', file: 'ja.json' },
-          { code: 'en', iso: 'en-US', file: 'en.json' }
+          { code: 'ja', iso: 'ja', file: 'ja.json' },
+          { code: 'en', iso: 'en', file: 'en.json' }
         ],
         defaultLocale: 'ja',
         vueI18n: {

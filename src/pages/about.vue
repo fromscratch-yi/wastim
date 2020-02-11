@@ -85,6 +85,14 @@
           .swiper-button-prev(slot="button-prev")
           .swiper-button-next(slot="button-next")
         BgAnimation
+    footer
+      ul
+        li.term_of_service
+          nuxt-link(:to="localePath('term_of_service')") {{ $t('setting.term-of-service') }}
+        li /
+        li.privacy_policy
+          nuxt-link(:to="localePath('privacy_policy')") {{ $t('setting.privacy-policy') }}
+      p.copy &copy;2020 WasTim All Rights Reserved
 </template>
 
 <script>
@@ -333,6 +341,29 @@ h2 {
       text-align: left;
       font-size: 14px;
     }
+  }
+}
+footer {
+  ul {
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 30px);
+    padding: 15px;
+    border-top: 2px solid #2b2a2a;
+  }
+  li {
+    position: relative;
+    margin: 0 5px;
+    a {
+      color: #2b2a2a;
+    }
+  }
+  .copy {
+    padding: 15px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #b1b1b1;
+    background-color: #2b2a2a;
   }
 }
 </style>

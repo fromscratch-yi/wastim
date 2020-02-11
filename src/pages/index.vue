@@ -23,6 +23,9 @@
         ul.link_wrap
           li.about
             nuxt-link(:to="localePath('about')") {{ $t('setting.about') }}
+          li.about
+            a(v-if="$i18n.locale == 'ja'" href="https://fromscratch-y.work/ja/" target="_blank" rel="noopener") {{ $t('setting.creator') }}
+            a(v-else href="https://fromscratch-y.work/" target="_blank" rel="noopener") {{ $t('setting.creator') }}
           li.term_of_service
             nuxt-link(:to="localePath('term_of_service')") {{ $t('setting.term-of-service') }}
           li.privacy_policy
@@ -109,17 +112,6 @@ export default {
     },
     fbFacebookLogin () {
       this.singIn(facebookProvider)
-    }
-  },
-  head () {
-    return {
-      title: this.$t('title.top'),
-      meta: [
-        { hid: 'description', name: 'description', content: this.$t('top-description') }
-      ],
-      bodyAttrs: {
-        class: 'top'
-      }
     }
   }
 }

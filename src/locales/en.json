@@ -108,6 +108,7 @@
     "logout": "Logout"
   },
   "setting": {
+    "creator": "Creator's Portfolio",
     "about": "About this service",
     "term-of-service": "Term of service",
     "privacy-policy": "Privacy Policy",
