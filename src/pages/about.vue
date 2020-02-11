@@ -42,8 +42,8 @@
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step1-title')")
               p.img_wrap
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step1_ja.png" alt="")
-                img(v-else src="~assets/images/step1_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step7_ja.png" alt="")
+                img(v-else src="~assets/images/step7_en.png" alt="")
           swiper-slide
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step2-title')")
