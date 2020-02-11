@@ -20,4 +20,4 @@ export default !firebase.apps.length ? firebase.initializeApp(config) : firebase
 export { googleProvider, facebookProvider }
 
 const db = firebase.firestore()
-export { db }
+export { firebase, db }

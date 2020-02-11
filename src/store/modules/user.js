@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import { db } from '~/plugins/firebase.js'
+import { firebase, db } from '~/plugins/firebase.js'
 
 export const state = () => ({
   uid: null,
