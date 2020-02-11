@@ -170,7 +170,7 @@ header {
   position: sticky;
   position: -webkit-sticky;
   top: 0;
-  z-index: 1;
+  z-index: 8;
   box-shadow: 0 -2px 5px #c7c7c7;
   display: flex;
   align-items: center;
@@ -267,6 +267,7 @@ header {
     display: block;
     text-decoration: none;
     width: 60%;
+    max-width: 300px;
     margin: 20px auto 0;
     padding: 15px 30px;
     text-align: center;
