@@ -214,7 +214,6 @@ export default {
       'user'
     ]),
     endDateObj () {
-      console.log(this.dateObj)
       return new Date(this.dateObj.getFullYear(), this.dateObj.getMonth() + 1, 0)
     },
     doughnutChart () {
@@ -339,7 +338,6 @@ export default {
     },
     doughnutData () {
       const data = []
-      console.log(this.totalScore)
       data.push(this.totalScore)
       data.push(100 - this.totalScore)
       this.doughnutDataValues = data
@@ -607,8 +605,6 @@ export default {
           color: #07c8c1;
         }
       }
-      .radar_wrap {
-      }
       .total_tbl, .target_tbl, .date_tbl {
         width: calc(100% - 15px);
         max-width: 600px;
@@ -764,14 +760,10 @@ export default {
                 }
                 button {
                   color: #fff;
-                  padding: 7px 8px;
-                  min-width: 70px;
-                  border-radius: 15px;
-                  font-size: 13px;
-                }
-                button.diary {
                   padding: 7px 5px;
                   min-width: 65px;
+                  border-radius: 15px;
+                  font-size: 13px;
                 }
                 .register {
                   background-image: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
@@ -785,6 +777,9 @@ export default {
               td.diary_td {
                 white-space: pre-line;
                 text-align: left;
+              }
+              td.btn_td {
+                width: 65px;
               }
               td.no_data_td {
                 background: #efefef;

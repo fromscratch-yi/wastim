@@ -42,45 +42,45 @@
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step1-title')")
               p.img_wrap
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step7_ja.png" alt="")
-                img(v-else src="~assets/images/step7_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step7_ja.png" alt="step1")
+                img(v-else src="~assets/images/step7_en.png" alt="step1")
           swiper-slide
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step2-title')")
               p.img_wrap
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step2_ja.png" alt="")
-                img(v-else src="~assets/images/step2_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step2_ja.png" alt="step2")
+                img(v-else src="~assets/images/step2_en.png" alt="step2")
           swiper-slide
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step3-title')")
               p.img_wrap
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step3_ja.png" alt="")
-                img(v-else src="~assets/images/step3_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step3_ja.png" alt="step3")
+                img(v-else src="~assets/images/step3_en.png" alt="step3")
           swiper-slide
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step4-title')")
               p.img_wrap
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step4_ja.png" alt="")
-                img(v-else src="~assets/images/step4_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step4_ja.png" alt="step4")
+                img(v-else src="~assets/images/step4_en.png" alt="step4")
           swiper-slide
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step5-title')")
               p.img_wrap
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step5_ja.png" alt="")
-                img(v-else src="~assets/images/step5_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step5_ja.png" alt="step5")
+                img(v-else src="~assets/images/step5_en.png" alt="step5")
           swiper-slide
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step6-title')")
               p.img_wrap
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step6_ja.png" alt="")
-                img(v-else src="~assets/images/step6_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step6_ja.png" alt="step6")
+                img(v-else src="~assets/images/step6_en.png" alt="step6")
           swiper-slide(v-if="!user")
             .slide_inner_wrap
               p.slide_txt: span(v-html="$t('about.step7-title')")
               p.img_wrap.last
                 nuxt-link(:to="localePath('index')" v-html="$t('about.getting-start')")
-                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step7_ja.png" alt="")
-                img(v-else src="~assets/images/step7_en.png" alt="")
+                img(v-if="$i18n.locale == 'ja'" src="~assets/images/step7_ja.png" alt="step7")
+                img(v-else src="~assets/images/step7_en.png" alt="step7")
           .swiper-pagination(slot="pagination")
           .swiper-button-prev(slot="button-prev")
           .swiper-button-next(slot="button-next")

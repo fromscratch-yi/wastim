@@ -25,7 +25,7 @@ async function handleRequest (req, res) {
   if (!isReady) {
     await readyPromise
   }
-  res.set('Cache-Control', 'public, max-age=300, s-maxage=600')
+  res.set('Cache-Control', 'public, max-age=86400, s-maxage=86400')
   await nuxt.render(req, res)
 }
 
