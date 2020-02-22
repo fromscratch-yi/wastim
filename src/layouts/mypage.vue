@@ -118,10 +118,10 @@ export default {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.login(user)
-          this.loading = false
         } else {
           this.$router.push(this.localePath('index'))
         }
+        this.loading = false
       })
     } else {
       this.$router.push(this.localePath('index'))

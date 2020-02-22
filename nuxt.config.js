@@ -12,7 +12,6 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1.0,minimum-scale=1.0' },
       { name: 'format-detection', content: 'telephone=no, email=no, address=no' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
       { name: 'theme-color', content: '#fda085' },
       { hid: 'twitter:card', property: 'twitter:card', content: 'summary_large_image' },
       { hid: 'twitter:site', property: 'twitter:site', content: '@IshiyamaYuichi' },
@@ -46,11 +45,12 @@ module.exports = {
   manifest: {
     name: 'WasTim',
     short_name: 'WasTim',
-    description: 'Record your waste time.',
     background_color: '#ffffff',
     theme_color: '#fda085',
     display: 'standalone',
-    orientation: 'portrait'
+    orientation: 'portrait',
+    scope: '/',
+    start_url: '/mypage'
   },
   /*
   ** Customize the progress-bar color

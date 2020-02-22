@@ -1,7 +1,6 @@
 {
   "name": "WasTim",
   "version": "1.0.0",
-  "description": "This app can record your waste-time",
   "author": "Yuichi Ishiyama",
   "private": true,
   "scripts": {
