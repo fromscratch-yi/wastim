@@ -4,7 +4,7 @@
   "author": "Yuichi Ishiyama",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon src/server/index.js --watch server",
+    "dev": "cross-env  NUXT_HOST=0.0.0.0 NUXT_PORT=3333 NODE_ENV=development nodemon src/server/index.js --watch server",
     "start": "cross-env NODE_ENV=production node src/server/index.js",
     "build": "nuxt build",
     "generate": "nuxt generate",
