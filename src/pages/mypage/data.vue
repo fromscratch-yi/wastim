@@ -48,7 +48,6 @@ export default {
   },
   mounted () {
     this.queryMonth = this.$route.query.month
-    console.log('test', this.$route.query.month)
     if (this.queryMonth) {
       this.month = this.queryMonth
       this.dateObj = new Date(this.queryMonth + '-01')
