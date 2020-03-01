@@ -305,6 +305,8 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   align-items: top;
+  max-width: 640px;
+  margin: 0 auto;
   li {
     width: calc(100% / 4 - 30px);
     padding: 20px 15px;
@@ -339,7 +341,6 @@ h2 {
       }
     }
     p {
-      text-align: left;
       font-size: 14px;
     }
   }
