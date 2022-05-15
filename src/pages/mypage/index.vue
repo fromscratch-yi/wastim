@@ -13,7 +13,7 @@
           addForm.add_form_inner(v-bind:argDate="yesterday")
           button.close_btn(type="button" @click="registerNo"): img(src="~assets/images/close_wh.png" alt="" width="25" height="25")
         div.add_bg
-      MonthData(v-bind:argData="new Date()")
+      MonthData(v-bind:argData="this.dateObj")
 </template>
 
 <script>
@@ -71,6 +71,7 @@ export default {
     }
   },
   async mounted () {
+    this.dateObj = new Date()
     await db.collection(this.user.uid + '-daily').doc(this.yesterday).get().then((doc) => {
       if (doc.exists) {
         this.isNoData = false
