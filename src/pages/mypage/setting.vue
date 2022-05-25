@@ -105,6 +105,7 @@ export default {
           })
         })
         await db.collection('users').doc(user.uid).delete().then(function () {
+          // eslint-disable-next-line no-console
           console.log('Document successfully deleted')
         }).catch(function (error) {
           console.error('Error removing document: ', error)
